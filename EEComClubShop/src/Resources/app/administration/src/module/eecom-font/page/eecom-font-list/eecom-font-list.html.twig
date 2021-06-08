@@ -1,0 +1,101 @@
+{% block eecom_font_list %}
+    <sw-page class="eecom-font-list">
+
+        {% block eecom_font_list_smart_bar_header %}
+            <template #smart-bar-header>
+                {% block eecom_font_list_smart_bar_header_title %}
+                    <h2>
+                        {% block eecom_font_list_smart_bar_header_title_text %}
+                            {{ $tc('eecom-font.list.textTitle') }}
+                        {% endblock %}
+
+                        {% block eecom_font_list_smart_bar_header_amount %}
+                            <span v-if="!isLoading && total>0" class="sw-page__smart-bar-amount">
+                            ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block eecom_font_list_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button variant="primary" :routerLink="{ name: 'eecom.font.create' }">
+                    {{ $t('eecom-font.list.addButtonText') }}
+                </sw-button>
+            </template>
+        {% endblock %}
+
+        <template #content>
+            {% block eecom_font_list_content %}
+                <div class="eecom-font-list__content">
+                    <sw-entity-listing ref="eecomFontGrid"
+                                       class="eecom-font-list-grid"
+                                       :items="fonts"
+                                       :columns="columns"
+                                       :repository="fontRepository"
+                                       detailRoute="eecom.font.detail"
+                                       :showSelection="true"
+                                       :isLoading="isLoading"
+                                       identifier="eecom-font-list"
+                                       @inline-edit-save="onInlineEditSave">
+
+                        {% block eecom_font_list_grid_columns %}
+
+                            {% block eecom_font_list_grid_columns_name_ %}
+                                <template #column-name="{ item, isInlineEdit }">
+                                    {% block eecom_font_list_grid_columns_name_inline_edit %}
+                                        <sw-text-field v-if="isInlineEdit"
+                                                       v-model="item.name"
+                                                       size="small">
+                                        </sw-text-field>
+                                    {% endblock %}
+
+                                {% block eecom_font_list_grid_columns_name_content %}
+                                    <div v-else>
+                                        <router-link :to="{ name: 'eecom.font.detail', params: { id: item.id } }">
+                                            {{ item.name }}
+                                        </router-link>
+                                    </div>
+                                {% endblock %}
+                                </template>
+                            {% endblock %}
+
+                            {% block eecom_font_list_grid_columns_external_font %}
+                                <template #column-fontUrl="{ item, isInlineEdit }">
+                                    <sw-icon v-if="item.fontUrl" name="small-default-checkmark-line-medium" small class="is--active"></sw-icon>
+                                    <sw-icon v-else name="small-default-x-line-medium" small class="is--inactive"></sw-icon>
+                                </template>
+                            {% endblock %}
+                        {% endblock %}
+                    </sw-entity-listing>
+
+                    {% block eecom_font_list_empty_state %}
+                        <sw-empty-state v-if="!isLoading && !total" :title="$tc('eecom-font.list.emptyList')"></sw-empty-state>
+                    {% endblock %}
+
+                    {% block eecom_font_list_grid_loader %}
+                        <sw-loader v-if="isLoading"></sw-loader>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+        </template>
+
+        {% block eecom_font_list_sidebar %}
+            <template #sidebar>
+                <sw-sidebar>
+                    {% block eecom_font_list_sidebar_refresh %}
+                        <sw-sidebar-item
+                            icon="default-arrow-360-left"
+                            :title="$tc('eecom-font.list.titleSidebarItemRefresh')"
+                            @click="onRefresh">
+                        </sw-sidebar-item>
+                    {% endblock %}
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+
+    </sw-page>
+{% endblock %}

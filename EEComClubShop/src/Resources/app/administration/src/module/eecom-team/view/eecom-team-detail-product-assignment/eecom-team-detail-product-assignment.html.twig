@@ -1,0 +1,127 @@
+{% block eecom_team_detail_product_assignment %}
+    <div class="eecom-team-detail-product-assignment">
+
+        {% block eecom_team_detail_products %}
+            <sw-many-to-many-assignment-card
+                class="eecom-team-detail__products"
+                :title="$tc('eecom-team.detailProductAssignment.productAssignmentHeadline')"
+                :entityCollection="team.products"
+                :columns="productColumns"
+                :isLoading="isLoading"
+                :localMode="team.isNew()"
+                :criteria="productCriteria"
+                :selectLabel="$tc('eecom-team.detailProductAssignment.productAssignmentLabel')"
+                :placeholder="$tc('eecom-team.detailProductAssignment.productAssignmentPlaceholder')"
+                @paginate="onPaginateManualProductAssignment">
+
+                {% block eecom_team_detail_product_assignment_type_select %}
+                    <template #prepend-select>
+                        {% block eecom_team_detail_product_assignment_type_select_field %}
+                            <sw-single-select
+                                class="eecom-team-detail__product-assignment-type-select"
+                                v-model="team.productAssignmentType"
+                                :label="$tc('eecom-team.detailProductAssignment.productAssignmentTypeLabel')"
+                                :error="teamProductAssignmentTypeError"
+                                :options="productAssignmentTypes"
+                                required>
+                            </sw-single-select>
+                        {% endblock %}
+
+                        {% block eecom_team_detail_product_assignment_manual_alert %}
+                            <sw-alert
+                                v-if="team.productAssignmentType === 'product_stream' && manualAssignedProductsCount > 0"
+                                variant="info">
+                                {{ $tc('eecom-team.detailProductAssignment.alertManualAssignedProductsOnAssignmentTypeStream') }}
+                            </sw-alert>
+                        {% endblock %}
+                    </template>
+                {% endblock %}
+
+                {% block eecom_team_detail_product_assignment_stream_select %}
+                    <template
+                        v-if="team.productAssignmentType === 'product_stream'"
+                        #select>
+
+                        {% block eecom_team_detail_product_assignment_stream_select_field %}
+                            <sw-entity-single-select
+                                class="eecom-team-detail__product-stream-select"
+                                entity="product_stream"
+                                :label="$tc('eecom-team.detailProductAssignment.productAssignmentTypeStreamLabel')"
+                                :placeholder="$tc('eecom-team.detailProductAssignment.productAssignmentTypeStreamPlaceholder')"
+                                :error="productStreamInvalidError || teamProductStreamIdError"
+                                v-model="team.productStreamId">
+                            </sw-entity-single-select>
+                        {% endblock %}
+
+                        {% block eecom_team_detail_product_assignment_stream_preview_link %}
+                            <div class="eecom-team-detail-base__product-stream-preview-link">
+                                <router-link
+                                    v-if="team.productStreamId"
+                                    :to="{ name: 'sw.product.stream.detail', params: { id: team.productStreamId } }">
+                                    {{ $tc('eecom-team.detailProductAssignment.dynamicProductGroupDetailLinkText') }}
+                                    <sw-icon
+                                        name="default-arrow-simple-right"
+                                        small>
+                                    </sw-icon>
+                                </router-link>
+                            </div>
+                        {% endblock %}
+                    </template>
+                {% endblock %}
+
+                {% block eecom_team_detail_product_assignment_stream_preview_grid %}
+                    <template
+                        v-if="team.productAssignmentType === 'product_stream'"
+                        #data-grid>
+                        <sw-product-stream-grid-preview
+                            :filters="productStreamFilter"
+                            :columns="productColumns">
+                        </sw-product-stream-grid-preview>
+                    </template>
+                {% endblock %}
+
+                <template v-slot:[nameColumn]="{ item, column }">
+                    <router-link
+                        :to="{ name: column.routerLink, params: { id: item.id } }">
+                        <sw-product-variant-info :variations="item.options">
+                            {{ item.name || item.translated.name }}
+                        </sw-product-variant-info>
+                    </router-link>
+                </template>
+
+                <template v-slot:[manufacturerColumn]="{ item, column }">
+                    <router-link
+                        v-if="item.manufacturerId"
+                        :to="{ name: column.routerLink, params: { id: item.manufacturerId } }">
+                        {{ item.manufacturer.name || item.manufacturer.translated.name }}
+                    </router-link>
+                    <span v-else></span>
+                </template>
+
+                <template #empty-state>
+                    <img :src="'/administration/static/img/empty-states/products-empty-state.svg' | asset" alt="product empty state">
+
+                    <p>{{ $tc('eecom-team.detailProductAssignment.productAssignmentEmptyStateDescription') }}</p>
+                </template>
+            </sw-many-to-many-assignment-card>
+        {% endblock %}
+
+        {% block  eecom_team_detail_product_assignment_teaser_box_card %}
+            <sw-card :title="$tc('eecom-team.detailProductAssignment.teaserBoxTitle')" :isLoading="isLoading">
+
+                {% block eecom_team_detail_hero_box_product__field %}
+                    <sw-entity-single-select
+                        v-if="!isLoading"
+                        entity="product"
+                        :criteria="productCriteria"
+                        :label="$tc('eecom-team.detailProductAssignment.heroBoxProductLabel')"
+                        :placeholder="$tc('eecom-team.detailProductAssignment.heroBoxProductPlaceholder')"
+                        v-model="team.teaserProductId">
+                    </sw-entity-single-select>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

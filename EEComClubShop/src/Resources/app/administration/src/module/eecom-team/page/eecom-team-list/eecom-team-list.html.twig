@@ -1,0 +1,122 @@
+{% block eecom_team_list %}
+    <sw-page class="eecom-team-list">
+        {% block eecom_team_list_smart_bar_header %}
+            <template #smart-bar-header>
+                {% block eecom_team_list_smart_bar_header_title %}
+                    <h2>
+                        {% block eecom_team_list_smart_bar_header_title_text %}
+                            {{ $tc('eecom-team.list.textTitle') }}
+                        {% endblock %}
+
+                        {% block eecom_team_list_smart_bar_header_amount %}
+                            <span v-if="!isLoading && total>0" class="sw-page__smart-bar-amount">
+                            ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block eecom_team_list_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button variant="primary" :routerLink="{ name: 'eecom.team.create' }">
+                    {{ $t('eecom-team.list.addButtonText') }}
+                </sw-button>
+            </template>
+        {% endblock %}
+
+        {% block eecom_team_list_language_switch %}
+            <template #language-switch>
+                <sw-language-switch @on-change="onChangeLanguage"></sw-language-switch>
+            </template>
+        {% endblock %}
+
+        <template #content>
+            {% block eecom_team_list_content %}
+                <div class="eecom-team-list__content">
+                    <sw-entity-listing ref="eecomTeamGrid"
+                                       class="eecom-team-list-grid"
+                                       :items="teams"
+                                       :columns="columns"
+                                       :repository="teamRepository"
+                                       detailRoute="eecom.team.detail"
+                                       :showSelection="true"
+                                       :isLoading="isLoading"
+                                       identifier="eecom-team-list"
+                                       @inline-edit-save="onInlineEditSave">
+
+                        {% block eecom_team_list_grid_columns %}
+
+                            {% block eecom_team_list_grid_columns_name_preview %}
+                                <template #column-name="{ item, isInlineEdit }">
+                                    <sw-text-field v-if="isInlineEdit"
+                                                   v-model="item.name"
+                                                   size="small">
+                                    </sw-text-field>
+
+                                    <div v-else>
+                                        <router-link :to="{ name: 'eecom.team.detail', params: { id: item.id } }">
+                                            {{ item.translated ? item.translated.name : item.name }}
+                                        </router-link>
+                                    </div>
+                                </template>
+                            {% endblock %}
+
+                            {% block eecom_team_list_grid_columns_active %}
+                                <template #column-active="{ item, isInlineEdit }">
+                                    {% block eecom_team_list_grid_columns_active_inline_edit %}
+                                        <template v-if="isInlineEdit">
+                                            <sw-checkbox-field v-model="item.active"></sw-checkbox-field>
+                                        </template>
+                                    {% endblock %}
+
+                                    {% block eecom_team_list_grid_columns_active_content %}
+                                        <template v-else>
+                                            <sw-icon v-if="item.active" name="small-default-checkmark-line-medium" small class="is--active"></sw-icon>
+                                            <sw-icon v-else name="small-default-x-line-medium" small class="is--inactive"></sw-icon>
+                                        </template>
+                                    {% endblock %}
+                                </template>
+                            {% endblock %}
+
+                            {% block eecom_club_list_grid_columns_name_preview %}
+                                <template #preview-teamClub.club.shortName="{ item }">
+                                    <div v-if="item.teamClub">
+                                        <sw-media-preview-v2 :source="item.teamClub.club.logoSquareId ? item.teamClub.club.logoSquareId : null"></sw-media-preview-v2>
+                                    </div>
+                                </template>
+                            {% endblock %}
+
+                        {% endblock %}
+                    </sw-entity-listing>
+
+                    {% block eecom_team_list_empty_state %}
+                        <sw-empty-state v-if="!isLoading && !total" :title="$tc('eecom-team.list.emptyList')"></sw-empty-state>
+                    {% endblock %}
+
+                    {% block eecom_team_list_grid_loader %}
+                        <sw-loader v-if="isLoading"></sw-loader>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+        </template>
+
+        {% block eecom_team_list_sidebar %}
+            <template #sidebar>
+                <sw-sidebar>
+
+                    {% block eecom_team_list_sidebar_refresh %}
+                        <sw-sidebar-item
+                            icon="default-arrow-360-left"
+                            :title="$tc('eecom-team.list.titleSidebarItemRefresh')"
+                            @click="onRefresh">
+                        </sw-sidebar-item>
+                    {% endblock %}
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+
+    </sw-page>
+{% endblock %}

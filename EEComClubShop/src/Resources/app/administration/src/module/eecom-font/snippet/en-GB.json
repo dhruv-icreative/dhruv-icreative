@@ -1,0 +1,30 @@
+{
+    "eecom-font": {
+        "general": {
+            "mainMenuItemGeneral": "Font Manager",
+            "descriptionTextModule": "Manage fonts here"
+        },
+        "list": {
+            "textTitle": "Font Manager",
+            "addButtonText": "Add Font",
+            "columnName": "Font name",
+            "columnExternalFont": "External font (i.e. Google Font)",
+            "emptyList": "No fonts yet",
+            "saveSuccessMessage": "Font \"{name}\" has been saved.",
+            "titleSidebarItemRefresh": "Refresh"
+        },
+        "detail": {
+            "textHeadline": "New font",
+            "cancelButtonText": "Cancel",
+            "saveButtonText": "Save",
+            "errorTitle": "Error",
+            "emptyFieldErrorMessage": "Please add font-URL or font file",
+            "cardFontTitle": "Font",
+            "nameLabel": "Font name (use a clear and logical designation, i.e. \"Font name - style\")",
+            "namePlaceholder": "Enter font name",
+            "fontUrlLabel": "Font URL (for external fonts like Google or Adobe Fonts)",
+            "fontUrlPlaceholder": "Enter external font url...",
+            "fontFileLabel": "Or upload single font file (WOFF or TTF-file; don't upload ZIP-files or complete font families at once)"
+        }
+    }
+}

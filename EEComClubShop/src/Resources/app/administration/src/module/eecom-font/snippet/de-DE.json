@@ -1,0 +1,31 @@
+{
+    "eecom-font": {
+        "general": {
+            "mainMenuItemGeneral": "Schriftarten-Manager",
+            "descriptionTextModule": "Schriftarten hier verwalten"
+        },
+        "list": {
+            "textTitle": "Schriftarten-Manager",
+            "addButtonText": "Schriftart hinzufügen",
+            "columnName": "Schriftartenname",
+            "columnExternalFont": "Externe Schriftart (z. B. Google Font)",
+            "emptyList": "Noch keine Schriftarten",
+            "saveSuccessMessage": "Schriftart \"{name}\" wurde gespeichert.",
+            "titleSidebarItemRefresh": "Refresh"
+        },
+        "detail": {
+            "textHeadline": "Neue Schriftart",
+            "cancelButtonText": "Abbrechen",
+            "saveButtonText": "Speichern",
+            "errorTitle": "Fehler",
+            "emptyFieldErrorMessage": "Please add font-URL or font file",
+            "cardFontTitle": "Schriftart",
+            "labelContextMenuAddToFont": "Add to font",
+            "nameLabel": "Font name (use a clear and logical designation, i.e. \"Font name - style\")",
+            "namePlaceholder": "Enter font name",
+            "fontUrlLabel": "Font URL (for external fonts like Google or Adobe Fonts)",
+            "fontUrlPlaceholder": "Enter external font url...",
+            "fontFileLabel": "Or upload single font file (WOFF or TTF-file; don't upload ZIP-files or complete font families at once)"
+        }
+    }
+}

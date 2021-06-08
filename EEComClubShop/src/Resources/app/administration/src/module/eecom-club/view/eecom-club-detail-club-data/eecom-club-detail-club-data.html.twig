@@ -1,0 +1,165 @@
+{% block eecom_club_detail_club_data %}
+    <div class="eecom-club-detail-club-data">
+
+        {% block eecom_club_detail_club_data_basic_info_card %}
+            <sw-card :title="$tc('eecom-club.detailClubData.cardDataTitle')" :isLoading="isLoading">
+                {% block eecom_club_detail_club_data_basic_info_form %}
+                   <eecom-club-data-basic-info v-if="!isLoading">
+                   </eecom-club-data-basic-info>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block eecom_club_detail_club_data_club_info_card %}
+            <sw-card :title="$tc('eecom-club.detailClubData.cardInformationTitle')" :isLoading="isLoading">
+                {% block eecom_club_detail_club_data_club_info_form %}
+                    <div class="eecom-club-data-club-info">
+
+                        {% block eecom_club_data_club_info_ground_field %}
+                            <sw-field
+                                v-if="!isLoading"
+                                type="text"
+                                v-model="club.groundName"
+                                :label="$t('eecom-club.detail.groundNameLabel')"
+                                :placeholder="placeholder(club, 'groundName', $t('eecom-club.detail.groundNamePlaceholder'))">
+                            </sw-field>
+                        {% endblock %}
+
+                        {% block eecom_club_data_club_info_description_field %}
+                            <sw-text-editor
+                                v-if="!isLoading"
+                                v-model="club.clubDescription"
+                                :label="$t('eecom-club.detail.clubDescriptionLabel')"
+                                :placeholder="placeholder(club, 'clubDescription', $t('eecom-club.detail.clubDescriptionPlaceholder'))">
+                            </sw-text-editor>
+                        {% endblock %}
+
+                    </div>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block eecom_club_detail_club_data_club_photo_card %}
+            <sw-card :title="$tc('eecom-club.detailClubData.cardPhotoTitle')" :isLoading="isLoading">
+
+                {% block eecom_club_detail_club_data_club_photo_form %}
+                    <div class="eecom-club-media-form">
+
+                        {% block eecom_club_data_info_club_photo_field %}
+                            <sw-upload-listener
+                                v-if="!isLoading"
+                                :uploadTag="club.id"
+                                autoUpload
+                                @media-upload-finish="setMediaItem">
+                            </sw-upload-listener>
+                            <sw-media-upload-v2
+                                v-if="!isLoading"
+                                :uploadTag="club.id"
+                                variant="regular"
+                                class="eecom-club-detail__club-photo-image-upload"
+                                @media-drop="onDropMedia"
+                                @media-upload-sidebar-open="onMediaUploadButtonOpenSidebar">
+                            </sw-media-upload-v2>
+                        {% endblock %}
+
+                        {% block eecom_club_data_club_photo_grid %}
+                            <div class="eecom-club-media-form__previews">
+
+                                <div class="eecom-club-media-form__cover-container eecom-club-media-form__column">
+                                    {% block eecom_club_media_form_cover_preview %}
+                                        <div v-if="club.cover || cover" class="eecom-club-media-form__preview-cover">
+                                            <div class="preview-cover">
+                                                {% block eecom_club_media_form_cover_image %}
+                                                    <sw-media-preview-v2
+                                                        class="eecom-club-media-form__cover-image"
+                                                        :source="cover ? cover.id : club.cover.id">
+                                                    </sw-media-preview-v2>
+                                                {% endblock %}
+                                                <span>{{ $tc('sw-product.mediaForm.coverSubline') }}</span>
+                                            </div>
+                                        </div>
+                                        <div v-else class="eecom-club-media-form__cover-image is--placeholder">
+                                            {{ $tc('sw-product.mediaForm.coverSubline') }}
+                                        </div>
+                                    {% endblock %}
+                                </div>
+
+                                <div v-if="!isLoading"
+                                     class="eecom-club-media-form__grid eecom-club-media-form__column"
+                                     :style="gridAutoRows">
+                                    {%  block sw_product_media_form_grid_items %}
+                                        <eecom-club-image
+                                            v-for="mediaItem in mediaItems"
+                                            :key="mediaItem.id"
+                                            :isCover="isCover(mediaItem)"
+                                            :isPlaceholder="mediaItem.isPlaceholder"
+                                            :mediaId="mediaItem.id"
+                                            v-draggable="{ dragGroup: 'club-media', data: mediaItem, onDragEnter: onMediaItemDragSort }"
+                                            v-droppable="{ dragGroup: 'club-media', data: mediaItem }"
+                                            @eecom-club-image-delete="removeFile(mediaItem)"
+                                            @eecom-club-image-cover="markMediaAsCover(mediaItem)">
+                                        </eecom-club-image>
+                                    {% endblock %}
+                                </div>
+                                <sw-loader v-else></sw-loader>
+
+                            </div>
+                        {% endblock %}
+
+                    </div>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+        {% block eecom_club_detail_club_data_seo_card %}
+            <sw-card :title="$tc('eecom-club.detailClubData.cardSeoTitle')" :isLoading="isLoading">
+                {% block eecom_club_detail_club_data_seo_form %}
+                    <div class="eecom-club-data-seo">
+
+                        {% block eecom_club_data_seo_meta_title_field %}
+                            <sw-field
+                                v-if="!isLoading"
+                                type="text"
+                                :placeholder="$t('eecom-club.detail.metaTitlePlaceholder')"
+                                v-model="club.metaTitle"
+                                :label="$t('eecom-club.detail.metaTitleLabel')">
+                            </sw-field>
+                        {% endblock %}
+
+                        {% block eecom_club_data_seo_meta_description_field %}
+                            <sw-field
+                                v-if="!isLoading"
+                                type="textarea"
+                                :placeholder="$t('eecom-club.detail.metaDescriptionPlaceholder')"
+                                v-model="club.metaDescription"
+                                :label="$t('eecom-club.detail.metaDescriptionLabel')">
+                            </sw-field>
+                        {% endblock %}
+
+                        {% block eecom_club_data_seo_keywords_field %}
+                            <sw-field
+                                v-if="!isLoading"
+                                type="text"
+                                :placeholder="$t('eecom-club.detail.keywordsPlaceholder')"
+                                v-model="club.keywords"
+                                :label="$t('eecom-club.detail.keywordsLabel')">
+                            </sw-field>
+                        {% endblock %}
+
+                    </div>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block eecom_club_detail_club_data_seo_url_card %}
+            <sw-seo-url
+                v-if="club.seoUrls"
+                :isLoading="isLoading"
+                :hasDefaultTemplate="false"
+                :urls="club.seoUrls">
+            </sw-seo-url>
+        {% endblock %}
+
+    </div>
+{% endblock %}

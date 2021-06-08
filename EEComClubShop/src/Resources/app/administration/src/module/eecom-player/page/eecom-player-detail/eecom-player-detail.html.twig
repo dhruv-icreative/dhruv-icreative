@@ -1,0 +1,96 @@
+{% block eecom_player_detail %}
+    <sw-page class="eecom-player-detail">
+        {% block eecom_player_detail_header %}
+            <template #smart-bar-header>
+                <h2>{{ playerTitle }}</h2>
+            </template>
+        {% endblock %}
+
+        {% block eecom_player_detail_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button :routerLink="{ name: 'eecom.player.index' }">
+                    {{ $t('eecom-player.detail.cancelButtonText') }}
+                </sw-button>
+
+                <sw-button-process
+                    :isLoading="isLoading"
+                    :processSuccess="processSuccess"
+                    variant="primary"
+                    @process-finish="saveFinish"
+                    @click="onClickSave">
+                    {{ $t('eecom-player.detail.saveButtonText') }}
+                </sw-button-process>
+            </template>
+        {% endblock %}
+
+        {#        {% block sw_product_detail_language_switch %}#}
+        {#            <template slot="language-switch">#}
+        {#                <sw-language-switch#}
+        {#                    @on-change=""#}
+        {#                    :saveChangesFunction=""#}
+        {#                    :abortChangeFunction=""#}
+        {#                    :disabled="!teamId">#}
+        {#                </sw-language-switch>#}
+        {#            </template>#}
+        {#        {% endblock %}#}
+
+        {% block eecom_player_detail_content %}
+            <template #content>
+                <sw-card-view>
+
+                    {% block eecom_player_detail_content_tabs %}
+                        <sw-tabs v-if="playerId" class="eecom-player-detail-page__tabs">
+                            {% block eecom_player_detail_content_tabs_player_data %}
+                                <sw-tabs-item
+                                    class="eecom-player-detail__tab-player-data"
+                                    :route="{ name: 'eecom.player.detail.playerData', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-player.detail.tabPlayerData')">
+                                    {#:hasError="eecomTeamDetailPlayerDataError">#}
+                                    {{ $tc('eecom-player.detail.tabPlayerData') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+
+                            {% block eecom_player_detail_content_tabs_team_club_data %}
+                                <sw-tabs-item
+                                    class="eecom-player-detail__tab-team-club-data"
+                                    :route="{ name: 'eecom.player.detail.teamClubData', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-player.detail.tabTeamClubData')">
+                                    {{ $tc('eecom-player.detail.tabTeamClubData') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+
+                            {% block eecom_player_detail_content_tabs_product_assignment %}
+                                <sw-tabs-item
+                                    class="eecom-player-detail__tab-product-assignment"
+                                    :route="{ name: 'eecom.player.detail.productAssignment', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-player.detail.tabProductAssignment')">
+                                    {{ $tc('eecom-player.detail.tabProductAssignment') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+                        </sw-tabs>
+                    {% endblock %}
+
+                    {% block eecom_player_detail_content_view %}
+                        <router-view></router-view>
+                    {% endblock %}
+
+
+                </sw-card-view>
+            </template>
+        {% endblock %}
+
+        <template #sidebar>
+            {% block eecom_player_detail_sidebar %}
+                <sw-sidebar :propagateWidth="true">
+                    <sw-sidebar-media-item ref="mediaSidebarItem">
+                        <template #context-menu-items="media">
+                            <sw-context-menu-item @click="onAddItemToTeam(media.mediaItem)">
+                                {{ $tc('eecom-player.detail.labelContextMenuAddToPlayer') }}
+                            </sw-context-menu-item>
+                        </template>
+                    </sw-sidebar-media-item>
+                </sw-sidebar>
+            {% endblock %}
+        </template>
+    </sw-page>
+{% endblock %}

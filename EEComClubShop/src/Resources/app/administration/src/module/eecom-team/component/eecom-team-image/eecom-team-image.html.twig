@@ -1,0 +1,39 @@
+{% block eecom_team_image %}
+    <div class="eecom-team-image" :class="teamImageClasses">
+        <template v-if="!isPlaceholder">
+
+            {% block eecom_team_image_preview %}
+                <sw-media-preview-v2 class="eecom-team-image__image"
+                                     :source="mediaId"
+                                     :hideTooltip="false">
+                </sw-media-preview-v2>
+                <sw-label
+                    v-if="isCover"
+                    class="eecom-team-image__cover-label"
+                    variant="primary"
+                    size="medium"
+                    appearance="pill">
+                    {{ $tc('eecom-team.mediaForm.coverSubline') }}
+                </sw-label>
+            {% endblock %}
+
+            <sw-context-button class="eecom-team-image__context-button">
+                {% block eecom_team_image_context %}
+                    {% block eecom_team_image_context_cover_action %}
+                        <sw-context-menu-item v-if="!isCover" @click="$emit('eecom-team-image-cover')">{{ $tc('eecom-team.mediaForm.buttonAsCover') }}</sw-context-menu-item>
+                    {% endblock %}
+
+                    {% block eecom_team_image_context_delete_action %}
+                        <sw-context-menu-item variant="danger" @click="$emit('eecom-team-image-delete')">{{ $tc('eecom-team.mediaForm.buttonRemove') }}</sw-context-menu-item>
+                    {% endblock %}
+                {% endblock %}
+            </sw-context-button>
+        </template>
+
+        <template v-else class="is--invalid-drag">
+            {% block eecom_team_image_placeholder %}
+                <sw-icon class="eecom-team-image__placeholder-icon" :name="'default-object-image'" :small="true"></sw-icon>
+            {% endblock %}
+        </template>
+    </div>
+{% endblock %}

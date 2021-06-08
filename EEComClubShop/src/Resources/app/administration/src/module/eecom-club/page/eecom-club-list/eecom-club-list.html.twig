@@ -1,0 +1,118 @@
+{% block eecom_club_list %}
+    <sw-page class="eecom-club-list">
+
+        {% block eecom_club_list_smart_bar_header %}
+            <template #smart-bar-header>
+                {% block eecom_club_list_smart_bar_header_title %}
+                    <h2>
+                        {% block eecom_club_list_smart_bar_header_title_text %}
+                            {{ $tc('eecom-club.list.textTitle') }}
+                        {% endblock %}
+
+                        {% block eecom_club_list_smart_bar_header_amount %}
+                            <span v-if="!isLoading && total>0" class="sw-page__smart-bar-amount">
+                            ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block eecom_club_list_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button variant="primary" :routerLink="{ name: 'eecom.club.create' }">
+                    {{ $t('eecom-club.list.addButtonText') }}
+                </sw-button>
+            </template>
+        {% endblock %}
+
+        {% block eecom_club_list_language_switch %}
+            <template #language-switch>
+                <sw-language-switch @on-change="onChangeLanguage"></sw-language-switch>
+            </template>
+        {% endblock %}
+
+        <template #content>
+            {% block eecom_club_list_content %}
+                <div class="eecom-club-list__content">
+                    <sw-entity-listing ref="eecomClubGrid"
+                                       class="eecom-club-list-grid"
+                                       :items="clubs"
+                                       :columns="columns"
+                                       :repository="clubRepository"
+                                       detailRoute="eecom.club.detail"
+                                       :showSelection="true"
+                                       :isLoading="isLoading"
+                                       identifier="eecom-club-list"
+                                       @inline-edit-save="onInlineEditSave">
+
+                        {% block eecom_club_list_grid_columns %}
+
+                            {% block eecom_club_list_grid_columns_name_preview %}
+                                <template #preview-shortName="{ item }">
+                                    <sw-media-preview-v2 :source="item.logoSquareId ? item.logoSquareId : null"></sw-media-preview-v2>
+                                </template>
+                            {% endblock %}
+
+                            <template #column-shortName="{ item, isInlineEdit }">
+                                <sw-text-field v-if="isInlineEdit"
+                                               v-model="item.shortName"
+                                               size="small">
+                                </sw-text-field>
+
+                                <div v-else>
+                                    <router-link :to="{ name: 'eecom.club.detail', params: { id: item.id } }">
+                                        {{ item.translated ? item.translated.shortName : item.shortName }}
+                                    </router-link>
+                                </div>
+                            </template>
+
+                            {% block eecom_club_list_grid_columns_active %}
+                                <template #column-active="{ item, isInlineEdit }">
+                                    {% block eecom_club_list_grid_columns_active_inline_edit %}
+                                        <template v-if="isInlineEdit">
+                                            <sw-checkbox-field v-model="item.active"></sw-checkbox-field>
+                                        </template>
+                                    {% endblock %}
+
+                                    {% block eecom_club_list_grid_columns_active_content %}
+                                        <template v-else>
+                                            <sw-icon v-if="item.active" name="small-default-checkmark-line-medium" small class="is--active"></sw-icon>
+                                            <sw-icon v-else name="small-default-x-line-medium" small class="is--inactive"></sw-icon>
+                                        </template>
+                                    {% endblock %}
+                                </template>
+                            {% endblock %}
+                        {% endblock %}
+                    </sw-entity-listing>
+
+                    {% block eecom_club_list_empty_state %}
+                        <sw-empty-state v-if="!isLoading && !total" :title="$tc('eecom-club.list.emptyList')"></sw-empty-state>
+                    {% endblock %}
+
+                    {% block eecom_club_list_grid_loader %}
+                        <sw-loader v-if="isLoading"></sw-loader>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+        </template>
+
+        {% block eecom_club_list_sidebar %}
+            <template #sidebar>
+                <sw-sidebar>
+
+                    {% block eecom_club_list_sidebar_refresh %}
+                        <sw-sidebar-item
+                            icon="default-arrow-360-left"
+                            :title="$tc('eecom-club.list.titleSidebarItemRefresh')"
+                            @click="onRefresh">
+                        </sw-sidebar-item>
+                    {% endblock %}
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+
+    </sw-page>
+{% endblock %}

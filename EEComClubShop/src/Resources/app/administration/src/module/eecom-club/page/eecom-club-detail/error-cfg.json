@@ -1,0 +1,8 @@
+{
+    "eecom.club.detail.clubData": {
+        "club":[
+            "shortName",
+            "countryId"
+        ]
+    }
+}

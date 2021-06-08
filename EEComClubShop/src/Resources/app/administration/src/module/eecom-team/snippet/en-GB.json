@@ -1,0 +1,97 @@
+{
+    "eecom-team": {
+        "general": {
+            "mainMenuItemGeneral": "Team Manager",
+            "descriptionTextModule": "Manage teams here"
+        },
+        "list": {
+            "textTitle": "Teams",
+            "addButtonText": "Add Team",
+            "columnName": "Team Name",
+            "columnActive": "Active",
+            "columnClub": "Club",
+            "columnProfession": "Profession",
+            "emptyList": "No teams yet",
+            "saveSuccessMessage": "Team \"{name}\" has been saved.",
+            "titleSidebarItemRefresh": "Refresh"
+        },
+        "detail": {
+            "textHeadline": "New team",
+            "cancelButtonText": "Cancel",
+            "saveButtonText": "Save",
+            "errorTitle": "Error",
+            "tabTeamData": "Team Data",
+            "tabPlayerAssignment": "Player Assignment",
+            "tabProductAssignment": "Product Assignment",
+            "labelContextMenuAddToTeam": "Add to team",
+            "nameLabel": "Team name",
+            "namePlaceholder": "Enter name",
+            "activeLabel": "Active",
+            "professionLabel": "Profession",
+            "amateurText": "Amateur",
+            "semiproText": "Semi-Pro",
+            "proText": "Pro",
+            "assignTeamCategoryLabel": "Assign team category",
+            "assignTeamCategoryPlaceholder": "Select category...",
+            "sportTypeLabel": "Type of sport",
+            "footballText": "Football",
+            "handballText": "Handball",
+            "volleyballText": "Volleyball",
+            "basketballText": "Basketball",
+            "teamTypeLabel": "Team type",
+            "menText": "Men",
+            "womenText": "Women",
+            "youthText": "Youth",
+            "kidsText": "Kids",
+            "leagueLabel": "League",
+            "leaguePlaceholder": "Enter a league...",
+            "leagueRegionLabel": "League region (optional)",
+            "leagueRegionPlaceholder": "Enter a league region...",
+            "listItemAdd": "Add \"{term}\"",
+            "groundNameLabel": "Ground/Stadium",
+            "groundNamePlaceholder": "Enter ground/stadium name",
+            "teamDescriptionLabel": "Team description",
+            "teamDescriptionPlaceholder": "Enter description..."
+        },
+        "mediaForm": {
+            "coverSubline": "Cover",
+            "buttonAsCover": "Use as cover",
+            "buttonRemove": "Remove",
+            "errorHeadline": "Error",
+            "errorMediaItemDuplicated": "Media item already assigned."
+        },
+        "detailTeamData": {
+            "cardDataTitle": "Team Data",
+            "cardInformationTitle": "Team Information",
+            "cardPhotoTitle": "Team Photos"
+        },
+        "detailPlayerAssignment": {
+            "playerAssignmentHeadline": "Player assignment",
+            "playerAssignmentLabel": "Player",
+            "playerAssignmentPlaceholder": "Search and assign players...",
+            "createNewPlayerText": "Create new player",
+            "columnLastNameLabel": "Last name",
+            "columnFirstNameLabel": "First name",
+            "columnFavouritePlayerNumberLabel": "Player number",
+            "playerAssignmentEmptyStateDescription": "No players assigned"
+        },
+        "detailProductAssignment": {
+            "productAssignmentHeadline": "Product Assignment",
+            "productAssignmentLabel": "Product",
+            "productAssignmentPlaceholder": "Search and assign products...",
+            "productAssignmentTypeLabel": "Type",
+            "productAssignmentTypeManualLabel": "Manual selection",
+            "productAssignmentTypeStreamLabel": "Dynamic product group",
+            "productAssignmentTypeStreamPlaceholder": "Search and assign dynamic product groups...",
+            "columnNameLabel": "Name",
+            "columnManufacturerLabel": "Manufacturer",
+            "productAssignmentEmptyStateDescription": "No products assigned",
+            "dynamicProductGroupDetailLinkText": "Dynamic product group details",
+            "dynamicProductGroupInvalidMessage": "The selected dynamic product group is not valid. Please verify your dynamic product group details.",
+            "alertManualAssignedProductsOnAssignmentTypeStream": "There are still manually assigned products in this team.",
+            "teaserBoxTitle": "Teaser Box",
+            "heroBoxProductLabel": "Product to be presented in Hero Box on top of the page",
+            "heroBoxProductPlaceholder": "Select a product..."
+        }
+    }
+}

@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="EECom\ClubShop\Core\Api\FontUploadController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComClub\EEComClubDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_club" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComClub\Aggregate\EEComClubTranslation\EEComClubTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_club_translation" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComClub\Aggregate\EEComClubMedia\EEComClubMediaDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_club_media" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComClub\Aggregate\EEComClubTeam\EEComClubTeamDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_club_team" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComTeam\EEComTeamDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_team" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComTeam\Aggregate\EEComTeamTranslation\EEComTeamTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_team_translation" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComTeam\Aggregate\EEComTeamMedia\EEComTeamMediaDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_team_media" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComTeam\Aggregate\EEComTeamProduct\EEComTeamProductDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_team_product" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComTeam\Aggregate\EEComTeamPlayer\EEComTeamPlayerDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_team_player" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComLeague\EEComLeagueDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_league" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComLeagueRegion\EEComLeagueRegionDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_league_region" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComPlayer\EEComPlayerDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_player" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComPlayer\Aggregate\EEComPlayerProduct\EEComPlayerProductDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_player_product" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComPlayer\Aggregate\EEComPlayerShoe\EEComPlayerShoeDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_player_shoe" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComPlayer\Aggregate\EEComPlayerPlayingPosition1\EEComPlayerPlayingPosition1Definition">
+            <tag name="shopware.entity.definition" entity="eecom_player_playing_position_1" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComPlayer\Aggregate\EEComPlayerPlayingPosition2\EEComPlayerPlayingPosition2Definition">
+            <tag name="shopware.entity.definition" entity="eecom_player_playing_position_2" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComPlayer\Aggregate\EEComPlayerTeamPosition\EEComPlayerTeamPositionDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_player_team_position" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComFont\EEComFontDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_font" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\EEComPlayingPosition\EEComPlayingPositionDefinition">
+            <tag name="shopware.entity.definition" entity="eecom_playing_position" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\Extension\CategoryExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\Extension\LanguageExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\Extension\CountryExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\Extension\MediaExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\Extension\ProductExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+        <service id="EECom\ClubShop\Core\Content\Extension\ProductStreamExtension">
+            <tag name="shopware.entity.extension" />
+        </service>
+    </services>
+</container>

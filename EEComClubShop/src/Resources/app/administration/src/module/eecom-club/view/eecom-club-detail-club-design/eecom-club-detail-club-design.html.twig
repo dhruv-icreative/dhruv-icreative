@@ -1,0 +1,56 @@
+{% block eecom_club_detail_club_design %}
+    <div class="eecom-club-detail-club-design">
+
+        {% block eecom_club_detail_club_design_card %}
+            <sw-card :title="$tc('eecom-club.detailClubDesign.cardDesignTitle')" :isLoading="isLoading">
+                {% block eecom_club_detail_club_design_info_form %}
+                   <eecom-club-design-info v-if="!isLoading">
+                   </eecom-club-design-info>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block eecom_club_detail_font_assignment_card %}
+            <sw-card :title="$tc('eecom-club.detailClubDesign.cardFontAssignmentTitle')" :isLoading="isLoading">
+
+                {% block eecom_club_detail_font_assignment_add_font_1 %}
+                    <div v-if="!isLoading" class="eecom-club-detail-font-assignment-add-font">
+                        <router-link :to="{ name: 'eecom.font.create' }">
+                            {{ $tc('eecom-club.detailClubDesign.addNewFontText') }}
+                        </router-link>
+                    </div>
+                {% endblock %}
+
+                {% block eecom_club_detail_font_assignment_headline_font_field %}
+                    <sw-entity-single-select
+                        v-if="!isLoading"
+                        entity="eecom_font"
+                        :label="$tc('eecom-club.detailClubDesign.headlineFontLabel')"
+                        :placeholder="$tc('eecom-club.detailClubDesign.headlineFontPlaceholder')"
+                        v-model="club.headlineFontId">
+                    </sw-entity-single-select>
+                {% endblock %}
+
+                {% block eecom_club_detail_font_assignment_add_font_2 %}
+                    <div v-if="!isLoading" class="eecom-club-detail-font-assignment-add-font">
+                        <router-link :to="{ name: 'eecom.font.create' }">
+                            {{ $tc('eecom-club.detailClubDesign.addNewFontText') }}
+                        </router-link>
+                    </div>
+                {% endblock %}
+
+                {% block eecom_club_detail_font_assignment_text_font_field %}
+                    <sw-entity-single-select
+                        v-if="!isLoading"
+                        entity="eecom_font"
+                        :label="$tc('eecom-club.detailClubDesign.textFontLabel')"
+                        :placeholder="$tc('eecom-club.detailClubDesign.textFontPlaceholder')"
+                        v-model="club.textFontId">
+                    </sw-entity-single-select>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

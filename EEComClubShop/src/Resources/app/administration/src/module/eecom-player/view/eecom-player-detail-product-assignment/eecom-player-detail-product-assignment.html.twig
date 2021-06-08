@@ -1,0 +1,111 @@
+{% block eecom_player_detail_product_assignment %}
+    <div class="eecom-player-detail-product-assignment">
+
+        {% block eecom_player_detail_products %}
+            <sw-many-to-many-assignment-card
+                v-if="!isLoading"
+                class="eecom-player-detail__products"
+                :title="$tc('eecom-player.detailProductAssignment.productAssignmentHeadline')"
+                :entityCollection="player.products"
+                :columns="productColumns"
+                :isLoading="isLoading"
+                :localMode="player.isNew()"
+                :criteria="productCriteria"
+                :selectLabel="$tc('eecom-player.detailProductAssignment.productAssignmentLabel')"
+                :placeholder="$tc('eecom-player.detailProductAssignment.productAssignmentPlaceholder')"
+                @paginate="onPaginateManualProductAssignment">
+
+                {% block eecom_player_detail_product_assignment_type_select %}
+                    <template #prepend-select>
+                        {% block eecom_player_detail_product_assignment_type_select_field %}
+                            <sw-single-select
+                                class="eecom-player-detail__product-assignment-type-select"
+                                v-model="player.productAssignmentType"
+                                :label="$tc('eecom-player.detailProductAssignment.productAssignmentTypeLabel')"
+                                :error="playerProductAssignmentTypeError"
+                                :options="productAssignmentTypes"
+                                required>
+                            </sw-single-select>
+                        {% endblock %}
+
+                        {% block eecom_player_detail_product_assignment_manual_alert %}
+                            <sw-alert
+                                v-if="player.productAssignmentType === 'product_stream' && manualAssignedProductsCount > 0"
+                                variant="info">
+                                {{ $tc('eecom-player.detailProductAssignment.alertManualAssignedProductsOnAssignmentTypeStream') }}
+                            </sw-alert>
+                        {% endblock %}
+                    </template>
+                {% endblock %}
+
+                {% block eecom_player_detail_product_assignment_stream_select %}
+                    <template
+                        v-if="player.productAssignmentType === 'product_stream'"
+                        #select>
+
+                        {% block eecom_player_detail_product_assignment_stream_select_field %}
+                            <sw-entity-single-select
+                                class="eecom-player-detail__product-stream-select"
+                                entity="product_stream"
+                                :label="$tc('eecom-player.detailProductAssignment.productAssignmentTypeStreamLabel')"
+                                :placeholder="$tc('eecom-player.detailProductAssignment.productAssignmentTypeStreamPlaceholder')"
+                                :error="productStreamInvalidError || playerProductStreamIdError"
+                                v-model="player.productStreamId">
+                            </sw-entity-single-select>
+                        {% endblock %}
+
+                        {% block eecom_player_detail_product_assignment_stream_preview_link %}
+                            <div class="eecom-player-detail-base__product-stream-preview-link">
+                                <router-link
+                                    v-if="player.productStreamId"
+                                    :to="{ name: 'sw.product.stream.detail', params: { id: player.productStreamId } }">
+                                    {{ $tc('eecom-player.detailProductAssignment.dynamicProductGroupDetailLinkText') }}
+                                    <sw-icon
+                                        name="default-arrow-simple-right"
+                                        small>
+                                    </sw-icon>
+                                </router-link>
+                            </div>
+                        {% endblock %}
+                    </template>
+                {% endblock %}
+
+                {% block eecom_player_detail_product_assignment_stream_preview_grid %}
+                    <template
+                        v-if="player.productAssignmentType === 'product_stream'"
+                        #data-grid>
+                        <sw-product-stream-grid-preview
+                            :filters="productStreamFilter"
+                            :columns="productColumns">
+                        </sw-product-stream-grid-preview>
+                    </template>
+                {% endblock %}
+
+                <template v-slot:[nameColumn]="{ item, column }">
+                    <router-link
+                        :to="{ name: column.routerLink, params: { id: item.id } }">
+                        <sw-product-variant-info :variations="item.options">
+                            {{ item.name || item.translated.name }}
+                        </sw-product-variant-info>
+                    </router-link>
+                </template>
+
+                <template v-slot:[manufacturerColumn]="{ item, column }">
+                    <router-link
+                        v-if="item.manufacturerId"
+                        :to="{ name: column.routerLink, params: { id: item.manufacturerId } }">
+                        {{ item.manufacturer.name || item.manufacturer.translated.name }}
+                    </router-link>
+                    <span v-else></span>
+                </template>
+
+                <template #empty-state>
+                    <img :src="'/administration/static/img/empty-states/products-empty-state.svg' | asset" alt="product empty state">
+
+                    <p>{{ $tc('eecom-player.detailProductAssignment.productAssignmentEmptyStateDescription') }}</p>
+                </template>
+            </sw-many-to-many-assignment-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

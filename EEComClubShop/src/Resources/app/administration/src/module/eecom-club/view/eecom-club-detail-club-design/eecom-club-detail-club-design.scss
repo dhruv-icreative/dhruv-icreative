@@ -1,0 +1,13 @@
+@import "~scss/variables";
+
+.eecom-club-detail-club-design {
+
+    .eecom-club-detail-font-assignment-add-font {
+        text-align: right;
+        font-size: $font-size-small;
+
+        a {
+            color: $color-shopware-brand-500;
+        }
+    }
+}

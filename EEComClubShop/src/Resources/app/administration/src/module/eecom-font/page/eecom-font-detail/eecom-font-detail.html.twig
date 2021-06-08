@@ -1,0 +1,100 @@
+{% block eecom_font_detail %}
+    <sw-page class="eecom-font-detail">
+        {% block eecom_font_detail_header %}
+            <template #smart-bar-header>
+                <h2>{{ fontTitle }}</h2>
+            </template>
+        {% endblock %}
+
+        {% block eecom_font_detail_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button :routerLink="{ name: 'eecom.font.index' }">
+                    {{ $t('eecom-font.detail.cancelButtonText') }}
+                </sw-button>
+
+                <sw-button-process
+                    :isLoading="isLoading"
+                    :processSuccess="processSuccess"
+                    variant="primary"
+                    @process-finish="saveFinish"
+                    @click="onClickSave">
+                    {{ $t('eecom-font.detail.saveButtonText') }}
+                </sw-button-process>
+            </template>
+        {% endblock %}
+
+        {#        {% block sw_product_detail_language_switch %}#}
+        {#            <template slot="language-switch">#}
+        {#                <sw-language-switch#}
+        {#                    @on-change=""#}
+        {#                    :saveChangesFunction=""#}
+        {#                    :abortChangeFunction=""#}
+        {#                    :disabled="!teamId">#}
+        {#                </sw-language-switch>#}
+        {#            </template>#}
+        {#        {% endblock %}#}
+
+        {% block eecom_font_detail_content %}
+            <template #content>
+                <sw-card-view>
+
+                    {% block eecom_font_detail_content_card %}
+                        <sw-card :title="$tc('eecom-font.detail.cardFontTitle')" :isLoading="isLoading">
+
+                            {% block eecom_font_detail_content_name_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="font.name"
+                                    required
+                                    :label="$t('eecom-font.detail.nameLabel')"
+                                    :placeholder="placeholder(font, 'name', $t('eecom-font.detail.namePlaceholder'))"
+                                    :error="fontNameError">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_font_detail_content_external_font_url_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="font.fontUrl"
+                                    :label="$t('eecom-font.detail.fontUrlLabel')"
+                                    :placeholder="placeholder(font, 'fontUrl', $t('eecom-font.detail.fontUrlPlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_font_detail_content_external_font_file_field %}
+                                <sw-file-input
+                                    v-if="!isLoading"
+                                    :allowedMimeTypes="allowedFileTypes"
+                                    :label="$t('eecom-font.detail.fontFileLabel')"
+                                    v-model="font.fileName"
+                                    @change="handleFileUpload">
+                                </sw-file-input>
+                            {% endblock %}
+
+                            {% block eecomn_font_detail_content_external_font_file_name %}
+                                <div v-if="font.fileName">
+                                    <p>{{ "Uploaded File Name : " }}{{ font.fileName }}</p>
+                                </div>
+                            {% endblock %}
+
+                        </sw-card>
+                    {% endblock %}
+
+                </sw-card-view>
+            </template>
+        {% endblock %}
+
+        <template #sidebar>
+            {% block eecom_font_detail_sidebar %}
+                <sw-sidebar :propagateWidth="true">
+                    <sw-sidebar-media-item ref="mediaSidebarItem">
+                        <template #context-menu-items="media">
+                        </template>
+                    </sw-sidebar-media-item>
+                </sw-sidebar>
+            {% endblock %}
+        </template>
+    </sw-page>
+{% endblock %}

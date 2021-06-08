@@ -1,0 +1,239 @@
+{% block eecom_club_data_basic_info %}
+    <div class="club-data-basic-info">
+        <sw-container columns="1fr 1fr" gap="0px 30px">
+            {% block eecom_club_data_info_shortName_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="text"
+                    v-model="club.shortName"
+                    :required="isTitleRequired"
+                    :label="$t('eecom-club.detail.shortNameLabel')"
+                    :placeholder="placeholder(club, 'shortName', $t('eecom-club.detail.shortNamePlaceholder'))"
+                    :error="clubShortNameError">
+                </sw-field>
+            {% endblock %}
+
+            {% block eecom_club_data_info_active_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="switch"
+                    v-model="club.active"
+                    :label="$t('eecom-club.detail.activeLabel')">
+                </sw-field>
+            {% endblock %}
+        </sw-container>
+
+        <sw-container columns="1fr 1fr" gap="0px 30px">
+            <div>
+                {% block eecom_club_data_info_longName_field %}
+                    <sw-field
+                        v-if="!isLoading"
+                        type="text"
+                        v-model="club.longName"
+                        :label="$t('eecom-club.detail.longNameLabel')"
+                        :placeholder="placeholder(club, 'longName', $t('eecom-club.detail.longNamePlaceholder'))">
+                    </sw-field>
+                {% endblock %}
+
+                {% block eecom_club_data_info_fullName_field %}
+                    <sw-field
+                        v-if="!isLoading"
+                        type="text"
+                        v-model="club.fullName"
+                        :label="$t('eecom-club.detail.fullNameLabel')"
+                        :placeholder="placeholder(club, 'fullName', $t('eecom-club.detail.fullNamePlaceholder'))">
+                    </sw-field>
+                {% endblock %}
+            </div>
+            {% block eecom_club_data_info_logo_square_field %}
+                <sw-upload-listener
+                    v-if="!isLoading"
+                    uploadTag="logo-square"
+                    autoUpload
+                    @media-upload-finish="setMediaLogoSquare">
+                </sw-upload-listener>
+                <sw-media-upload-v2
+                    v-if="!isLoading"
+                    uploadTag="logo-square"
+                    variant="regular"
+                    class="eecom-club-detail__logo-square-image-upload"
+                    :source="club.clubLogoSquare"
+                    :allowMultiSelect="false"
+                    :sourceContext="club"
+                    :label="$tc('eecom-club.detail.logoSquareLabel')"
+                    @media-drop="onDropMediaLogoSquare"
+                    @media-upload-sidebar-open="onMediaUploadButtonOpenSidebar"
+                    @media-upload-remove-image="onUnlinkLogoSquare">
+                </sw-media-upload-v2>
+            {% endblock %}
+        </sw-container>
+        <sw-container columns="1fr 1fr" gap="0px 30px">
+            <div>
+                {% block eecom_club_data_info_department_field %}
+                    <sw-field
+                        v-if="!isLoading"
+                        type="text"
+                        v-model="club.department"
+                        :label="$t('eecom-club.detail.departmentLabel')"
+                        :placeholder="placeholder(club, 'department', $t('eecom-club.detail.departmentPlaceholder'))">
+                    </sw-field>
+                {% endblock %}
+
+                <sw-container columns="2fr 1fr" gap="0px 20px">
+                    {% block eecom_club_data_info_street_field %}
+                        <sw-field
+                            v-if="!isLoading"
+                            type="text"
+                            v-model="club.street"
+                            :label="$t('eecom-club.detail.streetLabel')"
+                            :placeholder="placeholder(club, 'street', $t('eecom-club.detail.streetPlaceholder'))">
+                        </sw-field>
+                    {% endblock %}
+
+                    {% block eecom_club_data_info_number_field %}
+                        <sw-field
+                            v-if="!isLoading"
+                            type="number"
+                            v-model="club.number"
+                            :label="$t('eecom-club.detail.numberLabel')"
+                            :placeholder="placeholder(club, 'number', $t('eecom-club.detail.numberPlaceholder'))">
+                        </sw-field>
+                    {% endblock %}
+                </sw-container>
+                <sw-container columns="1fr 2fr" gap="0px 20px">
+                    {% block eecom_club_data_info_zipcode_field %}
+                        <sw-field
+                            v-if="!isLoading"
+                            type="text"
+                            v-model="club.zipcode"
+                            :label="$t('eecom-club.detail.zipcodeLabel')"
+                            :placeholder="placeholder(club, 'zipcode', $t('eecom-club.detail.zipcodePlaceholder'))">
+                        </sw-field>
+                    {% endblock %}
+
+                    {% block eecom_club_data_info_city_field %}
+                        <sw-field
+                            v-if="!isLoading"
+                            type="text"
+                            v-model="club.city"
+                            :label="$t('eecom-club.detail.cityLabel')"
+                            :placeholder="placeholder(club, 'city', $t('eecom-club.detail.cityPlaceholder'))">
+                        </sw-field>
+                    {% endblock %}
+                </sw-container>
+                {% block eecom_club_data_info_country_field %}
+                    <sw-entity-single-select
+                        v-if="!isLoading"
+                        class="eecom-club-detail__country-select"
+                        entity="country"
+                        :label="$t('eecom-club.detail.countryLabel')"
+                        :placeholder="$t('eecom-club.detail.countryPlaceholder')"
+                        :error="clubCountryIdError"
+                        validation="required"
+                        required
+                        v-model="countryId">
+                    </sw-entity-single-select>
+                {% endblock %}
+            </div>
+
+            {% block eecom_club_data_info_logo_landscape_field %}
+                <sw-upload-listener
+                    v-if="!isLoading"
+                    autoUpload
+                    uploadTag="logo-landscape"
+                    @media-upload-finish="setMediaLogoLandscape">
+                </sw-upload-listener>
+                <sw-media-upload-v2
+                    v-if="!isLoading"
+                    variant="regular"
+                    uploadTag="logo-landscape"
+                    class="eecom-club-detail__logo-landscape-image-upload"
+                    :source="club.clubLogoLandscape"
+                    :allowMultiSelect="false"
+                    :sourceContext="club"
+                    :label="$tc('eecom-club.detail.logoLandscapeLabel')"
+                    @media-drop="onDropMediaLogoLandscape"
+                    @media-upload-sidebar-open="onMediaUploadButtonOpenSidebar"
+                    @media-upload-remove-image="onUnlinkLogoLandscape">
+                </sw-media-upload-v2>
+            {% endblock %}
+        </sw-container>
+        <sw-container columns="1fr 1fr" gap="0px 30px">
+            <sw-container columns="1fr 1fr" gap="0px 30px">
+
+            {% block eecom_club_data_info_phone_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="text"
+                    v-model="club.phoneNumber"
+                    :label="$t('eecom-club.detail.phoneLabel')"
+                    :placeholder="placeholder(club, 'phoneNumber', $t('eecom-club.detail.phonePlaceholder'))">
+                </sw-field>
+            {% endblock %}
+
+            {% block eecom_club_data_info_contact_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="text"
+                    v-model="club.contactPerson"
+                    :label="$t('eecom-club.detail.contactPersonLabel')"
+                    :placeholder="placeholder(club, 'contactPerson', $t('eecom-club.detail.contactPersonPlaceholder'))">
+                </sw-field>
+            {% endblock %}
+            </sw-container>
+
+            {% block eecom_club_data_info_email_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="text"
+                    v-model="club.email"
+                    :label="$t('eecom-club.detail.emailLabel')"
+                    :placeholder="placeholder(club, 'email', $t('eecom-club.detail.emailPlaceholder'))">
+                </sw-field>
+            {% endblock %}
+        </sw-container>
+        <sw-container columns="1fr 1fr" gap="0px 30px">
+            {% block eecom_club_data_info_website1_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="text"
+                    v-model="club.clubWebsite1"
+                    :label="$t('eecom-club.detail.website1Label')"
+                    :placeholder="placeholder(club, 'clubWebsite1', $t('eecom-club.detail.website1Placeholder'))">
+                </sw-field>
+            {% endblock %}
+
+            {% block eecom_club_data_info_website2_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="text"
+                    v-model="club.clubWebsite2"
+                    :label="$t('eecom-club.detail.website2Label')"
+                    :placeholder="placeholder(club, 'clubWebsite2', $t('eecom-club.detail.website2Placeholder'))">
+                </sw-field>
+            {% endblock %}
+        </sw-container>
+
+        <sw-container columns="1fr 1fr" gap="0px 30px">
+            {% block eecom_club_data_info_news_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="text"
+                    v-model="club.clubNews"
+                    :label="$t('eecom-club.detail.newsUrlLabel')"
+                    :placeholder="placeholder(club, 'clubNews', $t('eecom-club.detail.newsUrlPlaceholder'))">
+                </sw-field>
+            {% endblock %}
+
+            {% block eecom_club_data_info_facebook_field %}
+                <sw-field
+                    v-if="!isLoading"
+                    type="text"
+                    v-model="club.facebookUrl"
+                    :label="$t('eecom-club.detail.facebookUrlLabel')"
+                    :placeholder="placeholder(club, 'facebookUrl', $t('eecom-club.detail.facebookUrlPlaceholder'))">
+                </sw-field>
+            {% endblock %}
+        </sw-container>
+    </div>
+{% endblock %}

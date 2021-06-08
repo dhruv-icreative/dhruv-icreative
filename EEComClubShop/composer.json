@@ -1,0 +1,28 @@
+{
+    "name": "eecom/club-shop",
+    "description": "Club shop description here...",
+    "version": "v1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "11ts ecom GmbH"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "EECom\\ClubShop\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "EECom\\ClubShop\\EEComClubShop",
+        "label": {
+            "de-DE": "EECom VereinsShop",
+            "en-GB": "EECom ClubShop"
+        },
+        "description": {
+            "de-DE": "EECom VereinsShop - Verwalten Sie Ihren Club",
+            "en-GB": "EECom ClubShop - manage your club."
+        }
+    }
+}

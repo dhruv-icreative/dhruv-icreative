@@ -1,0 +1,53 @@
+{% block eecom_team_detail_player_assignment %}
+    <div class="eecom-team-detail-team-assignment">
+        {% block eecom_team_detail_player_assignment_card %}
+            <sw-card :title="$tc('eecom-team.detailPlayerAssignment.playerAssignmentHeadline')" :isLoading="isLoading">
+
+                {% block eecom_team_detail_player_assignment_create_player_button %}
+                    <template>
+                        <div class="eecom-team-detail-base__create-player-button">
+                            <router-link :to="{ name: 'eecom.player.create' }">
+                                {{ $tc('eecom-team.detailPlayerAssignment.createNewPlayerText') }}
+                            </router-link>
+                        </div>
+                    </template>
+                {% endblock %}
+
+                {% block eecom_team_detail_player_assignment_selection %}
+                    <sw-entity-multi-id-select
+                        v-if="!isLoading && players"
+                        v-model="players"
+                        labelProperty="firstName"
+                        :criteria="teamPlayerCriteria"
+                        :label="$tc('eecom-team.detailPlayerAssignment.playerAssignmentLabel')"
+                        :placeholder="$tc('eecom-team.detailPlayerAssignment.playerAssignmentPlaceholder')"
+                        :repository="playerRepository">
+                    </sw-entity-multi-id-select>
+                {% endblock %}
+
+                {% block eecom_team_detail_player_assignment_grid %}
+                    <sw-data-grid
+                        :dataSource="gridData"
+                        :isLoading="isLoading"
+                        :columns="playerColumns"
+                        :showSelection="false"
+                        :showActions="false">
+
+                        <template #column-player.lastName="{ item, column }">
+                            <router-link :to="{ name: column.routerLink, params: { id: item.eecomPlayerId } }">
+                                {{ item.player.lastName }}
+                            </router-link>
+                        </template>
+
+                        <template #column-player.firstName="{ item, column }">
+                            <router-link :to="{ name: column.routerLink, params: { id: item.eecomPlayerId } }">
+                                {{ item.player.firstName }}
+                            </router-link>
+                        </template>
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+    </div>
+{% endblock %}

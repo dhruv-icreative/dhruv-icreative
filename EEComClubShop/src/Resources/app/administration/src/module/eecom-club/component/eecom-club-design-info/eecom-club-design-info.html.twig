@@ -1,0 +1,62 @@
+{% block eecom_club_design_info %}
+    <div class="eecom-club-design-info">
+        <sw-container columns="1fr 1fr" gap="0px 30px">
+            {% block eecom_club_design_info_primary_color_field %}
+                <sw-colorpicker
+                    v-model="club.clubColorPrimary"
+                    :label="$tc('eecom-club.detailClubDesign.primaryColorLabel')">
+                </sw-colorpicker>
+            {% endblock %}
+
+            {% block eecom_club_design_info_secondary_color_field %}
+                <sw-colorpicker
+                    v-model="club.clubColorSecondary"
+                    :label="$tc('eecom-club.detailClubDesign.secondaryColorLabel')">
+                </sw-colorpicker>
+            {% endblock %}
+        </sw-container>
+
+        <sw-container columns="1fr 1fr" gap="0px 30px">
+            {% block eecom_club_design_info_optional_color_field %}
+                <sw-colorpicker
+                    v-model="club.clubColorOptional"
+                    :label="$tc('eecom-club.detailClubDesign.optionalColorLabel')">
+                </sw-colorpicker>
+            {% endblock %}
+
+            {% block eecom_club_design_info_background_color_field %}
+                <sw-colorpicker
+                    v-model="club.backgroundColor"
+                    :label="$tc('eecom-club.detailClubDesign.backgroundColorLabel')">
+                </sw-colorpicker>
+            {% endblock %}
+        </sw-container>
+
+        {% block eecom_club_design_info_club_design_field %}
+            <sw-field
+                type="select"
+                v-model="club.clubShopDesign"
+                :options="options"
+                :label="$tc('eecom-club.detailClubDesign.clubShopDesignLabel')"
+                :placeholder="$tc('eecom-club.detailClubDesign.clubDesignPlaceholder')">
+            </sw-field>
+        {% endblock %}
+
+        {% block eecom_club_design_info_preview_button %}
+            <sw-button
+                v-if="!isLoading"
+                variant="primary"
+                :disabled="club.clubShopDesign === null"
+                @click="openPreviewModal">
+                {{ $t('eecom-club.detailClubDesign.previewButtonText') }}
+            </sw-button>
+        {% endblock %}
+
+        {% block eecom_club_design_info_preview_modal %}
+            <sw-modal v-if="currentDesign"
+                      @modal-close="closePreviewModal"
+                      :title="$tc('eecom-club.detailClubDesign.previewModalTitle')">
+            </sw-modal>
+        {% endblock %}
+    </div>
+{% endblock %}

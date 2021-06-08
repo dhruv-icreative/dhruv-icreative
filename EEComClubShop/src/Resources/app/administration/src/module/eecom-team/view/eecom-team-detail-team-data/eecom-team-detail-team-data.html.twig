@@ -1,0 +1,216 @@
+{% block eecom_team_detail_team_data %}
+    <div class="eecom-team-detail-team-data">
+
+        {% block eecom_team_detail_team_data_basic_info_card %}
+            <sw-card :title="$tc('eecom-team.detailTeamData.cardDataTitle')" :isLoading="isLoading">
+                {% block eecom_team_detail_team_data_basic_info_form %}
+                    <div class="eecom-team-data-basic-info">
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_team_data_info_name_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="team.name"
+                                    :required="isTitleRequired"
+                                    :label="$t('eecom-team.detail.nameLabel')"
+                                    :placeholder="placeholder(team, 'name', $t('eecom-team.detail.namePlaceholder'))"
+                                    :error="teamNameError">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_team_data_info_active_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="switch"
+                                    v-model="team.active"
+                                    :label="$t('eecom-team.detail.activeLabel')">
+                                </sw-field>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_team_data_info_profession_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="radio"
+                                    v-model="team.profession"
+                                    class="eecom-team-data-info-profession-field"
+                                    required
+                                    bordered
+                                    :options="professionOptions"
+                                    :label="$t('eecom-team.detail.professionLabel')"
+                                    :error="teamProfessionError">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_team_data_info_assign_team_category_field %}
+                                <sw-entity-single-select
+                                    v-if="!isLoading"
+                                    v-model="team.categoryId"
+                                    {#:disabled="true"#}
+                                    {#:criteria="categoryCriteria"#}
+                                    :label="$tc('eecom-team.detail.assignTeamCategoryLabel')"
+                                    :placeholder="$tc('eecom-team.detail.assignTeamCategoryPlaceholder')"
+                                    entity="category">
+                                </sw-entity-single-select>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_team_data_info_sport_type_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="select"
+                                    v-model="team.sportType"
+                                    :options="sportTypeOptions"
+                                    required
+                                    :label="$tc('eecom-team.detail.sportTypeLabel')"
+                                    :error="teamSportTypeError">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_team_data_info_team_type_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="select"
+                                    v-model="team.teamType"
+                                    :options="teamTypeOptions"
+                                    required
+                                    :label="$tc('eecom-team.detail.teamTypeLabel')"
+                                    :error="teamTeamTypeError">
+                                </sw-field>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_team_data_info_league_field %}
+                                <eecom-entity-single-select
+                                    v-if="!isLoading"
+                                    v-model="team.leagueId"
+                                    :label="$tc('eecom-team.detail.leagueLabel')"
+                                    :placeholder="$tc('eecom-team.detail.leaguePlaceholder')"
+                                    entity="eecom_league">
+                                </eecom-entity-single-select>
+                            {% endblock %}
+
+                            {% block eecom_team_data_info_league_region_field %}
+                                <eecom-entity-single-select
+                                    v-if="!isLoading"
+                                    v-model="team.leagueRegionId"
+                                    :label="$tc('eecom-team.detail.leagueRegionLabel')"
+                                    :placeholder="$tc('eecom-team.detail.leagueRegionPlaceholder')"
+                                    entity="eecom_league_region">
+                                </eecom-entity-single-select>
+                            {% endblock %}
+                        </sw-container>
+
+                    </div>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block eecom_team_detail_team_data_team_info_card %}
+            <sw-card :title="$tc('eecom-team.detailTeamData.cardInformationTitle')" :isLoading="isLoading">
+                {% block eecom_team_detail_team_data_team_info_form %}
+                    <div class="eecom-team-data-team-info">
+
+                        {% block eecom_team_data_team_info_ground_field %}
+                            <sw-field
+                                v-if="!isLoading"
+                                type="text"
+                                v-model="team.groundName"
+                                :label="$t('eecom-team.detail.groundNameLabel')"
+                                :placeholder="placeholder(team, 'groundName', $t('eecom-team.detail.groundNamePlaceholder'))">
+                            </sw-field>
+                        {% endblock %}
+
+                        {% block eecom_team_data_team_info_description_field %}
+                            <sw-text-editor
+                                v-if="!isLoading"
+                                v-model="team.teamDescription"
+                                :label="$t('eecom-team.detail.teamDescriptionLabel')"
+                                :placeholder="placeholder(team, 'teamDescription', $t('eecom-team.detail.teamDescriptionPlaceholder'))">
+                            </sw-text-editor>
+                        {% endblock %}
+
+                    </div>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block eecom_team_detail_team_data_team_photo_card %}
+            <sw-card :title="$tc('eecom-team.detailTeamData.cardPhotoTitle')" :isLoading="isLoading">
+
+                {% block eecom_team_detail_team_data_team_photo_form %}
+                    <div class="eecom-team-media-form">
+
+                        {% block eecom_team_data_info_team_photo_field %}
+                            <sw-upload-listener
+                                v-if="!isLoading"
+                                :uploadTag="team.id"
+                                autoUpload
+                                @media-upload-finish="setMediaItem">
+                            </sw-upload-listener>
+                            <sw-media-upload-v2
+                                v-if="!isLoading"
+                                :uploadTag="team.id"
+                                variant="regular"
+                                class="eecom-team-detail__team-photo-image-upload"
+                                @media-drop="onDropMedia"
+                                @media-upload-sidebar-open="onMediaUploadButtonOpenSidebar">
+                            </sw-media-upload-v2>
+                        {% endblock %}
+
+                        {% block eecom_team_data_team_photo_grid %}
+                            <div class="eecom-team-media-form__previews">
+
+                                <div class="eecom-team-media-form__cover-container eecom-team-media-form__column">
+                                    {% block eecom_team_media_form_cover_preview %}
+                                        <div v-if="team.cover || cover" class="eecom-team-media-form__preview-cover">
+                                            <div class="preview-cover">
+                                                {% block eecom_team_media_form_cover_image %}
+                                                    <sw-media-preview-v2
+                                                        class="eecom-team-media-form__cover-image"
+                                                        :source="cover ? cover.id : team.cover.id">
+                                                    </sw-media-preview-v2>
+                                                {% endblock %}
+                                                <span>{{ $tc('eecom-team.mediaForm.coverSubline') }}</span>
+                                            </div>
+                                        </div>
+                                        <div v-else class="eecom-team-media-form__cover-image is--placeholder">
+                                            {{ $tc('eecom-team.mediaForm.coverSubline') }}
+                                        </div>
+                                    {% endblock %}
+                                </div>
+
+                                <div v-if="!isLoading"
+                                     class="eecom-team-media-form__grid eecom-team-media-form__column"
+                                     :style="gridAutoRows">
+                                    {%  block sw_product_media_form_grid_items %}
+                                        <eecom-team-image
+                                            v-for="mediaItem in mediaItems"
+                                            :key="mediaItem.id"
+                                            :isCover="isCover(mediaItem)"
+                                            :isPlaceholder="mediaItem.isPlaceholder"
+                                            :mediaId="mediaItem.id"
+                                            v-draggable="{ dragGroup: 'team-media', data: mediaItem, onDragEnter: onMediaItemDragSort }"
+                                            v-droppable="{ dragGroup: 'team-media', data: mediaItem }"
+                                            @eecom-team-image-delete="removeFile(mediaItem)"
+                                            @eecom-team-image-cover="markMediaAsCover(mediaItem)">
+                                        </eecom-team-image>
+                                    {% endblock %}
+                                </div>
+                                <sw-loader v-else></sw-loader>
+
+                            </div>
+                        {% endblock %}
+
+                    </div>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

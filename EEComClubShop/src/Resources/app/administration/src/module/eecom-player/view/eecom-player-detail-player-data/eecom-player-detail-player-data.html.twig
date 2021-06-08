@@ -1,0 +1,318 @@
+{% block eecom_player_detail_player_data %}
+    <div class="eecom-player-detail-player-data">
+
+        {% block eecom_player_detail_player_data_basic_info_card %}
+            <sw-card :title="$tc('eecom-player.detail.cardDataTitle')" :isLoading="isLoading">
+                {% block eecom_player_detail_player_data_basic_info_form %}
+                    <div class="eecom-player-data-basic-info">
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_last_name_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="player.lastName"
+                                    :label="$t('eecom-player.detailPlayerData.lastNameLabel')"
+                                    :placeholder="placeholder(player, 'lastName', $t('eecom-player.detailPlayerData.lastNamePlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_active_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="switch"
+                                    v-model="player.active"
+                                    :label="$t('eecom-player.detailPlayerData.activeLabel')">
+                                </sw-field>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_first_name_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="player.firstName"
+                                    :label="$t('eecom-player.detailPlayerData.firstNameLabel')"
+                                    :placeholder="placeholder(player, 'firstName', $t('eecom-player.detailPlayerData.firstNamePlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_hocmember_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="checkbox"
+                                    v-model="player.hocMember"
+                                    :label="$t('eecom-player.detailPlayerData.hocMemberLabel')">
+                                </sw-field>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_nickname_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="player.nickName"
+                                    :label="$tc('eecom-player.detailPlayerData.nickNameLabel')"
+                                    :placeholder="placeholder(player, 'nickName', $t('eecom-player.detailPlayerData.nickNamePlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_player_flock_available_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="checkbox"
+                                    v-model="player.playerFlockAvailable"
+                                    :label="$t('eecom-player.detailPlayerData.playerFlockAvailableLabel')">
+                                </sw-field>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            <div>
+                                <sw-container columns="2fr 1fr" gap="0px 20px">
+                                    {% block eecom_player_data_info_street_field %}
+                                        <sw-field
+                                            v-if="!isLoading"
+                                            type="text"
+                                            v-model="player.street"
+                                            :label="$tc('eecom-player.detailPlayerData.streetLabel')"
+                                            :placeholder="placeholder(player, 'street', $t('eecom-player.detailPlayerData.streetPlaceholder'))">
+                                        </sw-field>
+                                    {% endblock %}
+
+                                    {% block eecom_player_data_info_number_field %}
+                                        <sw-field
+                                            v-if="!isLoading"
+                                            type="number"
+                                            v-model="player.number"
+                                            :label="$t('eecom-player.detailPlayerData.numberLabel')"
+                                            :placeholder="placeholder(player, 'number', $t('eecom-player.detailPlayerData.numberPlaceholder'))">
+                                        </sw-field>
+                                    {% endblock %}
+                                </sw-container>
+
+                                <sw-container columns="1fr 2fr" gap="0px 20px">
+                                    {% block eecom_player_data_info_zipcode_field %}
+                                        <sw-field
+                                            v-if="!isLoading"
+                                            type="text"
+                                            v-model="player.zipcode"
+                                            :label="$t('eecom-player.detailPlayerData.zipcodeLabel')"
+                                            :placeholder="placeholder(player, 'zipcode', $t('eecom-player.detailPlayerData.zipcodePlaceholder'))">
+                                        </sw-field>
+                                    {% endblock %}
+
+                                    {% block eecom_player_data_info_city_field %}
+                                        <sw-field
+                                            v-if="!isLoading"
+                                            type="text"
+                                            v-model="player.city"
+                                            :label="$t('eecom-player.detailPlayerData.cityLabel')"
+                                            :placeholder="placeholder(player, 'city', $t('eecom-player.detailPlayerData.cityPlaceholder'))">
+                                        </sw-field>
+                                    {% endblock %}
+                                </sw-container>
+
+                                {% block eecom_player_data_info_country_field %}
+                                    <sw-entity-single-select
+                                        v-if="!isLoading"
+                                        class="eecom-player-detail__country-select"
+                                        entity="country"
+                                        :label="$t('eecom-player.detailPlayerData.countryLabel')"
+                                        :placeholder="$t('eecom-player.detailPlayerData.countryPlaceholder')"
+                                        :error="playerCountryIdError"
+                                        validation="required"
+                                        required
+                                        v-model="countryId">
+                                    </sw-entity-single-select>
+                                {% endblock %}
+                            </div>
+
+                            {% block eecom_player_data_info_player_photo_field %}
+                                <sw-upload-listener
+                                    v-if="!isLoading"
+                                    uploadTag="player-photo"
+                                    autoUpload
+                                    @media-upload-finish="setMediaLogoSquare">
+                                </sw-upload-listener>
+                                <sw-media-upload-v2
+                                    v-if="!isLoading"
+                                    uploadTag="player-photo"
+                                    variant="regular"
+                                    class="eecom-player-detail__player-photo-image-upload"
+                                    :source="player.playerPicture"
+                                    :allowMultiSelect="false"
+                                    :sourceContext="player"
+                                    :label="$tc('eecom-player.detailPlayerData.playerPhotoLabel')"
+                                    @media-drop="onDropMedia"
+                                    @media-upload-sidebar-open="onMediaUploadButtonOpenSidebar"
+                                    @media-upload-remove-image="onUnlinkMedia">
+                                </sw-media-upload-v2>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_phone_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="player.phone"
+                                    :label="$t('eecom-player.detailPlayerData.phoneLabel')"
+                                    :placeholder="placeholder(player, 'phone', $t('eecom-player.detailPlayerData.phonePlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            <sw-container columns="1fr 1fr" gap="0px 30px">
+                                {% block eecom_player_data_info_gender_field %}
+                                    <sw-field
+                                        v-if="!isLoading"
+                                        type="select"
+                                        v-model="player.gender"
+                                        :options="genderOptions"
+                                        :label="$tc('eecom-player.detailPlayerData.genderLabel')">
+                                    </sw-field>
+                                {% endblock %}
+
+                                {% block eecom_player_data_info_nationality_field %}
+                                    <sw-entity-single-select
+                                        v-if="!isLoading"
+                                        class="eecom-player-detail__nationality-select"
+                                        entity="country"
+                                        :label="$t('eecom-player.detailPlayerData.nationalityLabel')"
+                                        :placeholder="$t('eecom-player.detailPlayerData.nationalityPlaceholder')"
+                                        :error="playerNationIdError"
+                                        v-model="nationId">
+                                    </sw-entity-single-select>
+                                {% endblock %}
+                            </sw-container>
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_email1_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="email"
+                                    v-model="player.email1"
+                                    :label="$t('eecom-player.detailPlayerData.email1Label')"
+                                    :placeholder="placeholder(player, 'email1', $t('eecom-player.detailPlayerData.email1Placeholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_dob_field %}
+                                <sw-datepicker
+                                    v-if="!isLoading"
+                                    dateType="date"
+                                    v-model="player.dob"
+                                    :label="$t('eecom-player.detailPlayerData.dobLabel')">
+                                </sw-datepicker>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_email2_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="email"
+                                    v-model="player.email2"
+                                    :label="$t('eecom-player.detailPlayerData.email2Label')"
+                                    :placeholder="placeholder(player, 'email2', $t('eecom-player.detailPlayerData.email2Placeholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            <sw-container columns="1fr 1fr" gap="0px 30px">
+                                {% block eecom_player_data_info_fav_player_number_field %}
+                                    <sw-field
+                                        v-if="!isLoading"
+                                        type="number"
+                                        v-model="player.favouritePlayerNumber"
+                                        :label="$t('eecom-player.detailPlayerData.favouritePlayerNumberLabel')"
+                                        :placeholder="placeholder(player, 'favouritePlayerNumber', $t('eecom-player.detailPlayerData.favouritePlayerNumberPlaceholder'))">
+                                    </sw-field>
+                                {% endblock %}
+
+                                {% block eecom_player_data_info_player_pass_number_field %}
+                                    <sw-field
+                                        v-if="!isLoading"
+                                        type="text"
+                                        v-model="player.playerPassNumber"
+                                        :label="$t('eecom-player.detailPlayerData.playerPassNumberLabel')"
+                                        :placeholder="placeholder(player, 'playerPassNumber', $t('eecom-player.detailPlayerData.playerPassNumberPlaceholder'))">
+                                    </sw-field>
+                                {% endblock %}
+                            </sw-container>
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_fb_profile_link_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="player.facebookUrl"
+                                    :label="$t('eecom-player.detailPlayerData.facebookUrlLabel')"
+                                    :placeholder="placeholder(player, 'facebookUrl', $t('eecom-player.detailPlayerData.facebookUrlPlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_playing_foot_field %}
+                                <sw-radio-field
+                                    v-if="!isLoading"
+                                    :label="$t('eecom-player.detailPlayerData.playingFootLabel')"
+                                    class="eecom-player-data-info-playing-foot-field"
+                                    bordered
+                                    :options="playingFootOptions"
+                                    v-model="player.playingFoot">
+                                </sw-radio-field>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_insta_profile_link_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="player.instagramUrl"
+                                    :label="$t('eecom-player.detailPlayerData.instagramUrlLabel')"
+                                    :placeholder="placeholder(player, 'instagramUrl', $t('eecom-player.detailPlayerData.instagramUrlPlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_fav_playing_pos_field %}
+                                <sw-entity-tag-select
+                                    v-if="!isLoading"
+                                    :label="$t('eecom-player.detailPlayerData.favPlayingPositionLabel')"
+                                    v-model="player.onePlayingPositions"
+                                    :placeholder="$t('eecom-player.detailPlayerData.favPlayingPositionPlaceholder')">
+                                </sw-entity-tag-select>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_snap_profile_link_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="player.snapchatUrl"
+                                    :label="$t('eecom-player.detailPlayerData.snapchatUrlLabel')"
+                                    :placeholder="placeholder(player, 'snapchatUrl', $t('eecom-player.detailPlayerData.snapchatUrlPlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_second_fav_playing_pos_field %}
+                                <sw-entity-tag-select
+                                    v-if="!isLoading"
+                                    :label="$t('eecom-player.detailPlayerData.secondFavPlayingPositionLabel')"
+                                    v-model="player.twoPlayingPositions"
+                                    :placeholder="$t('eecom-player.detailPlayerData.secondFavPlayingPositionPlaceholder')">
+                                </sw-entity-tag-select>
+                            {% endblock %}
+                        </sw-container>
+
+                    </div>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

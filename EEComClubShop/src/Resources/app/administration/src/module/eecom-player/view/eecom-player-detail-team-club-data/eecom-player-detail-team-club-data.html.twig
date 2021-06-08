@@ -1,0 +1,151 @@
+{% block eecom_player_detail_team_club_data %}
+    <div class="eecom-player-detail-team-club-data">
+
+        {% block eecom_player_detail_team_club_data_card %}
+            <sw-card :title="$tc('eecom-player.detailTeamClubData.cardTeamClubDataTitle')" :isLoading="isLoading">
+                {% block eecom_player_detail_team_club_data_form %}
+                    <div class="eecom-player-team-club-data-form">
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_team_name_field %}
+                                <sw-entity-single-select
+                                    v-if="!isLoading"
+                                    class="eecom-player-detail__country-select"
+                                    entity="eecom_team"
+                                    :label="$t('eecom-player.detailTeamClubData.teamNameLabel')"
+                                    :placeholder="$t('eecom-player.detailTeamClubData.teamNamePlaceholder')"
+                                    {#:error="playerCountryIdError"#}
+                                    v-model="eecomTeamId">
+                                </sw-entity-single-select>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_profession_field %}
+                                <sw-radio-field
+                                    v-if="!isLoading"
+                                    v-model="player.profession"
+                                    class="eecom-player-data-info-profession-field"
+                                    bordered
+                                    :options="professionOptions"
+                                    :label="$t('eecom-player.detailTeamClubData.professionLabel')"
+                                    :error="playerProfessionError">
+                                </sw-radio-field>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_team_player_number_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="number"
+                                    v-model="player.teamPlayerNumber"
+                                    :label="$t('eecom-player.detailTeamClubData.teamPlayerNumberLabel')"
+                                    :placeholder="placeholder(player, 'teamPlayerNumber', $t('eecom-player.detailTeamClubData.teamPlayerNumberPlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_preferred_team_position_field %}
+                                <sw-entity-tag-select
+                                    v-if="!isLoading"
+                                    :label="$t('eecom-player.detailTeamClubData.teamPositionLabel')"
+                                    v-model="player.teamPositions"
+                                    :placeholder="$t('eecom-player.detailTeamClubData.teamPositionPlaceholder')">
+                                </sw-entity-tag-select>
+                            {% endblock %}
+                        </sw-container>
+
+                        <sw-container columns="1fr 1fr" gap="0px 30px">
+                            {% block eecom_player_data_info_club_member_since_field %}
+                                <sw-datepicker
+                                    v-if="!isLoading"
+                                    dateType="date"
+                                    v-model="player.clubMemberSince"
+                                    :label="$t('eecom-player.detailTeamClubData.clubMemberSinceLabel')">
+                                </sw-datepicker>
+                            {% endblock %}
+
+                            {% block eecom_player_data_info_previous_club_field %}
+                                <sw-field
+                                    v-if="!isLoading"
+                                    type="text"
+                                    v-model="player.previousClub"
+                                    :label="$t('eecom-player.detailTeamClubData.previousClubLabel')"
+                                    :placeholder="placeholder(player, 'previousClub', $t('eecom-player.detailTeamClubData.previousClubPlaceholder'))">
+                                </sw-field>
+                            {% endblock %}
+                        </sw-container>
+
+                    </div>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+        {% block eecom_player_detail_team_data_team_info_card %}
+            <sw-card :title="$tc('eecom-player.detailTeamClubData.cardSizeSpecificationTitle')" :isLoading="isLoading">
+                {% block eecom_player_detail_size_specification_form %}
+                    <div class="eecom-player-size-specification-form">
+
+                        {% block eecom_player_size_info_jersey_size_field %}
+                            <sw-radio-field
+                                v-if="!isLoading"
+                                v-model="player.jerseySize"
+                                class="eecom-player-size-info-jersey-size-field"
+                                bordered
+                                :options="jerseySizeOptions"
+                                :label="$t('eecom-player.detailTeamClubData.jerseySizeLabel')"
+                                :error="playerJerseySizeError">
+                            </sw-radio-field>
+                        {% endblock %}
+
+                        {% block eecom_player_size_info_short_size_field %}
+                            <sw-radio-field
+                                v-if="!isLoading"
+                                v-model="player.shortSize"
+                                class="eecom-player-size-info-short-size-field"
+                                bordered
+                                :options="shortSizeOptions"
+                                :label="$t('eecom-player.detailTeamClubData.shortSizeLabel')"
+                                :error="playerShortSizeError">
+                            </sw-radio-field>
+                        {% endblock %}
+
+                        <sw-container columns="1fr 4fr" gap="0px 30px">
+                            <div>
+                                {% block eecom_player_size_info_shoe_size_field %}
+                                    <sw-field
+                                        v-if="!isLoading"
+                                        type="text"
+                                        v-model="player.shoeSize"
+                                        :label="$t('eecom-player.detailTeamClubData.shoeSizeLabel')"
+                                        :placeholder="placeholder(player, 'shoeSize', $t('eecom-player.detailTeamClubData.shoeSizePlaceholder'))">
+                                    </sw-field>
+                                {% endblock %}
+
+                                {% block eecom_player_size_info_height_field %}
+                                    <sw-field
+                                        v-if="!isLoading"
+                                        type="number"
+                                        v-model="player.height"
+                                        :label="$t('eecom-player.detailTeamClubData.heightLabel')"
+                                        :placeholder="placeholder(player, 'height', $t('eecom-player.detailTeamClubData.heightPlaceholder'))">
+                                    </sw-field>
+                                {% endblock %}
+                            </div>
+
+                            {% block eecom_player_size_info_fav_shoe_model_field %}
+                                <sw-entity-tag-select
+                                    v-if="!isLoading"
+                                    :label="$t('eecom-player.detailTeamClubData.shoeModelLabel')"
+                                    v-model="player.shoeProducts"
+                                    :criteria="productCriteria"
+                                    :placeholder="$t('eecom-player.detailTeamClubData.shoeModelPlaceholder')">
+                                </sw-entity-tag-select>
+                            {% endblock %}
+                        </sw-container>
+
+                    </div>
+                {% endblock %}
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% block eecom_team_detail %}
+    <sw-page class="eecom-team-detail">
+        {% block eecom_team_detail_header %}
+            <template #smart-bar-header>
+                <h2>{{ teamTitle }}</h2>
+            </template>
+        {% endblock %}
+
+        {% block eecom_team_detail_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button :routerLink="{ name: 'eecom.team.index' }">
+                    {{ $t('eecom-team.detail.cancelButtonText') }}
+                </sw-button>
+
+                <sw-button-process
+                    :isLoading="isLoading"
+                    :processSuccess="processSuccess"
+                    variant="primary"
+                    @process-finish="saveFinish"
+                    @click="onClickSave">
+                    {{ $t('eecom-team.detail.saveButtonText') }}
+                </sw-button-process>
+            </template>
+        {% endblock %}
+
+        {% block sw_product_detail_language_switch %}
+            <template #language-switch>
+                <sw-language-switch
+                    @on-change="onChangeLanguage"
+                    :saveChangesFunction="saveOnLanguageChange"
+                    :abortChangeFunction="abortOnLanguageChange"
+                    :disabled="!teamId">
+                </sw-language-switch>
+            </template>
+        {% endblock %}
+
+        {% block eecom_team_detail_content %}
+            <template #content>
+                <sw-card-view>
+
+                    {% block eecom_team_detail_content_language_info %}
+                        <sw-language-info
+                            :entityDescription="placeholder(team, 'name', $tc('eecom-team.detail.textHeadline'))"
+                            :isNewEntity="!teamId">
+                        </sw-language-info>
+                    {% endblock %}
+
+                    {% block eecom_team_detail_content_tabs %}
+                        <sw-tabs v-if="teamId" class="eecom-team-detail-page__tabs">
+                            {% block eecom_team_detail_content_tabs_team_data %}
+                                <sw-tabs-item
+                                    class="eecom-team-detail__tab-team-data"
+                                    :route="{ name: 'eecom.team.detail.teamData', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-team.detail.tabTeamData')"
+                                    :hasError="eecomTeamDetailTeamDataError">
+                                    {{ $tc('eecom-team.detail.tabTeamData') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+
+                            {% block eecom_team_detail_content_tabs_player_assignment %}
+                                <sw-tabs-item
+                                    class="eecom-team-detail__tab-player-assignment"
+                                    :route="{ name: 'eecom.team.detail.playerAssignment', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-team.detail.tabPlayerAssignment')">
+                                    {{ $tc('eecom-team.detail.tabPlayerAssignment') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+
+                            {% block eecom_team_detail_content_tabs_product_assignment %}
+                                <sw-tabs-item
+                                    class="eecom-team-detail__tab-product-assignment"
+                                    :route="{ name: 'eecom.team.detail.productAssignment', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-team.detail.tabProductAssignment')">
+                                    {{ $tc('eecom-team.detail.tabProductAssignment') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+                        </sw-tabs>
+                    {% endblock %}
+
+                    {% block eecom_team_detail_content_view %}
+                        <router-view></router-view>
+                    {% endblock %}
+
+
+                </sw-card-view>
+            </template>
+        {% endblock %}
+
+        <template #sidebar>
+            {% block eecom_team_detail_sidebar %}
+                <sw-sidebar :propagateWidth="true">
+                    <sw-sidebar-media-item ref="mediaSidebarItem">
+                        <template #context-menu-items="media">
+                            <sw-context-menu-item @click="onAddItemToTeam(media.mediaItem)">
+                                {{ $tc('eecom-team.detail.labelContextMenuAddToTeam') }}
+                            </sw-context-menu-item>
+                        </template>
+                    </sw-sidebar-media-item>
+                </sw-sidebar>
+            {% endblock %}
+        </template>
+    </sw-page>
+{% endblock %}

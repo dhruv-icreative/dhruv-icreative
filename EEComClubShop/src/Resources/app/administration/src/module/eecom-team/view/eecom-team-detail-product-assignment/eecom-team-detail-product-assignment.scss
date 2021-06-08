@@ -1,0 +1,29 @@
+@import "~scss/variables";
+
+.eecom-team-detail__products {
+
+    .sw-many-to-many-assignment-card__select-container {
+        background-color: $color-gray-100;
+    }
+
+    .eecom-team-detail__product-stream-select {
+        margin-bottom: 10px;
+    }
+
+    .eecom-team-detail-base__product-stream-preview-link {
+        text-align: right;
+        font-size: $font-size-small;
+        margin-bottom: 32px;
+
+        a {
+            color: $color-shopware-brand-500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .sw-icon {
+            margin-left: 6px;
+        }
+    }
+}

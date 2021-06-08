@@ -1,0 +1,136 @@
+{% block eecom_player_list %}
+    <sw-page class="eecom-player-list">
+        {% block eecom_player_list_smart_bar_header %}
+            <template #smart-bar-header>
+                {% block eecom_player_list_smart_bar_header_title %}
+                    <h2>
+                        {% block eecom_player_list_smart_bar_header_title_text %}
+                            {{ $tc('eecom-player.list.textTitle') }}
+                        {% endblock %}
+
+                        {% block eecom_player_list_smart_bar_header_amount %}
+                            <span v-if="!isLoading && total>0" class="sw-page__smart-bar-amount">
+                            ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block eecom_player_list_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button variant="primary" :routerLink="{ name: 'eecom.player.create' }">
+                    {{ $t('eecom-player.list.addButtonText') }}
+                </sw-button>
+            </template>
+        {% endblock %}
+
+        <template #content>
+            {% block eecom_player_list_content %}
+                <div class="eecom-player-list__content">
+                    <sw-entity-listing ref="eecomPlayerGrid"
+                                       class="eecom-player-list-grid"
+                                       :items="players"
+                                       :columns="columns"
+                                       :repository="playerRepository"
+                                       detailRoute="eecom.player.detail"
+                                       :showSelection="true"
+                                       :isLoading="isLoading"
+                                       identifier="eecom-player-list"
+                                       @inline-edit-save="onInlineEditSave">
+
+                        {% block eecom_player_list_grid_columns_name %}
+                            <template #column-lastName="{ item, compact, isInlineEdit }">
+
+                                {% block eecom_player_list_grid_columns_edit_name %}
+                                    <template v-if="isInlineEdit">
+                                        {% block eecom_player_list_grid_columns_edit_last_name %}
+                                            <sw-text-field v-model="item.lastName"
+                                                           :size="compact ? 'small' : 'default'">
+                                            </sw-text-field>
+                                        {% endblock %}
+
+                                        {% block eecom_player_list_grid_columns_edit_fav_player_number %}
+                                            <sw-field type="number"
+                                                           v-model="item.favouritePlayerNumber"
+                                                           :size="compact ? 'small' : 'default'">
+                                            </sw-field>
+                                        {% endblock %}
+                                    </template>
+                                {% endblock %}
+
+                                {% block eecom_player_list_grid_columns_name_link %}
+                                    <template v-else>
+                                        <router-link :to="{ name: 'eecom.player.detail', params: { id: item.id } }">
+                                            {{ item.lastName }}{{ ', ' }}{{ item.favouritePlayerNumber }}
+                                        </router-link>
+                                    </template>
+                                {% endblock %}
+
+                            </template>
+                        {% endblock %}
+
+                        {% block eecom_player_list_grid_columns_active %}
+                            <template #column-active="{ item, isInlineEdit }">
+                                {% block eecom_player_list_grid_columns_active_inline_edit %}
+                                    <template v-if="isInlineEdit">
+                                        <sw-checkbox-field v-model="item.active"></sw-checkbox-field>
+                                    </template>
+                                {% endblock %}
+
+                                {% block eecom_player_list_grid_columns_active_content %}
+                                    <template v-else>
+                                        <sw-icon v-if="item.active" name="small-default-checkmark-line-medium" small class="is--active"></sw-icon>
+                                        <sw-icon v-else name="small-default-x-line-medium" small class="is--inactive"></sw-icon>
+                                    </template>
+                                {% endblock %}
+                            </template>
+                        {% endblock %}
+
+                        {% block eecom_player_list_grid_columns_hocmember %}
+                            <template #column-hocMember="{ item }">
+                                <sw-icon v-if="item.hocMember" name="house-of-clubs" small class="is--active"></sw-icon>
+                                <div v-else>{{  }}</div>
+                            </template>
+                        {% endblock %}
+
+                        {% block eecom_club_list_grid_columns_name_preview %}
+                            <template #preview-playerTeam.team.name="{ item }">
+                                <div v-if="item.playerTeam && item.playerTeam.team.teamClub">
+                                    <sw-media-preview-v2 :source="item.playerTeam.team ? item.playerTeam.team.teamClub.club.logoSquareId : null"></sw-media-preview-v2>
+                                </div>
+                            </template>
+                        {% endblock %}
+
+                    </sw-entity-listing>
+
+                    {% block eecom_player_list_empty_state %}
+                        <sw-empty-state v-if="!isLoading && !total" :title="$tc('eecom-player.list.emptyList')"></sw-empty-state>
+                    {% endblock %}
+
+                    {% block eecom_player_list_grid_loader %}
+                        <sw-loader v-if="isLoading"></sw-loader>
+                    {% endblock %}
+                </div>
+            {% endblock %}
+
+        </template>
+
+        {% block eecom_player_list_sidebar %}
+            <template #sidebar>
+                <sw-sidebar>
+
+                    {% block eecom_player_list_sidebar_refresh %}
+                        <sw-sidebar-item
+                            icon="default-arrow-360-left"
+                            :title="$tc('eecom-player.list.titleSidebarItemRefresh')"
+                            @click="onRefresh">
+                        </sw-sidebar-item>
+                    {% endblock %}
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+
+    </sw-page>
+{% endblock %}

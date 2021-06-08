@@ -1,0 +1,52 @@
+{% block eecom_club_detail_team_assignment %}
+    <div class="eecom-club-detail-team-assignment">
+        {% block eecom_club_detail_team_assignment_card %}
+            <sw-card :title="$tc('eecom-club.detailTeamAssignment.teamAssignmentHeadline')" :isLoading="isLoading">
+
+                {% block eecom_club_detail_team_assignment_create_team_button %}
+                    <template>
+                        <div class="eecom-club-detail-base__create-team-button">
+                            <router-link :to="{ name: 'eecom.team.create' }">
+                                {{ $tc('eecom-club.detailTeamAssignment.createNewTeamText') }}
+                            </router-link>
+                        </div>
+                    </template>
+                {% endblock %}
+
+                {% block eecom_club_detail_team_assignment_selection %}
+                    <sw-entity-multi-id-select
+                        v-if="!isLoading && teams"
+                        v-model="teams"
+                        :criteria="clubTeamCriteria"
+                        :label="$tc('eecom-club.detailTeamAssignment.teamAssignmentLabel')"
+                        :placeholder="$tc('eecom-club.detailTeamAssignment.teamAssignmentPlaceholder')"
+                        :repository="teamRepository">
+                    </sw-entity-multi-id-select>
+                {% endblock %}
+
+                {% block eecom_club_detail_team_assignment_grid %}
+                    <sw-data-grid
+                        :dataSource="gridData"
+                        :isLoading="isLoading"
+                        :columns="teamColumns"
+                        :showSelection="false"
+                        :showActions="false">
+
+                        <template #column-team.name="{ item, column }">
+                            <router-link :to="{ name: column.routerLink, params: { id: item.eecomTeamId } }">
+                                {{ item.team.name || item.team.translated.name }}
+                            </router-link>
+                        </template>
+
+                        <template #column-team.active="{ item }">
+                            <sw-icon v-if="item.team.active" name="small-default-checkmark-line-medium" small class="is--active"></sw-icon>
+                            <sw-icon v-else name="small-default-x-line-medium" small class="is--inactive"></sw-icon>
+                        </template>
+                    </sw-data-grid>
+                {% endblock %}
+
+            </sw-card>
+        {% endblock %}
+
+    </div>
+{% endblock %}

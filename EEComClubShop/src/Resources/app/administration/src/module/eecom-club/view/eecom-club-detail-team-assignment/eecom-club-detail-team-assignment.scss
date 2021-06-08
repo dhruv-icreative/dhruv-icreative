@@ -1,0 +1,24 @@
+@import "~scss/variables";
+
+$eecom-club-detail-color-error: $color-crimson;
+$eecom-club-detail-color-success: $color-emerald;
+
+.eecom-club-detail-team-assignment {
+
+    .eecom-club-detail-base__create-team-button {
+        text-align: right;
+        font-size: $font-size-small;
+
+        a {
+            color: $color-shopware-brand-500;
+        }
+    }
+
+    .is--active {
+        color: $eecom-club-detail-color-success;
+    }
+
+    .is--inactive {
+        color: $eecom-club-detail-color-error;
+    }
+}

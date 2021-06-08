@@ -1,0 +1,20 @@
+@import "~scss/variables";
+
+$eecom-club-list-color-error: $color-crimson;
+$eecom-club-list-color-success: $color-emerald;
+
+.eecom-club-list {
+    .eecom-club-list__content {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+
+        .is--inactive {
+            color: $eecom-club-list-color-error;
+        }
+
+        .is--active {
+            color: $eecom-club-list-color-success;
+        }
+    }
+}

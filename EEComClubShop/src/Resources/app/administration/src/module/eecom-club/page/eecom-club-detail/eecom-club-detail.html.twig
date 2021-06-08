@@ -1,0 +1,98 @@
+{% block eecom_club_detail %}
+    <sw-page class="eecom-club-detail">
+        {% block eecom_club_detail_header %}
+            <template #smart-bar-header>
+                <h2>{{ clubTitle }}</h2>
+            </template>
+        {% endblock %}
+
+        {% block eecom_club_detail_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button :routerLink="{ name: 'eecom.club.index' }">
+                    {{ $t('eecom-club.detail.cancelButtonText') }}
+                </sw-button>
+
+                <sw-button-process
+                    :isLoading="isLoading"
+                    :processSuccess="processSuccess"
+                    variant="primary"
+                    @process-finish="saveFinish"
+                    @click="onClickSave">
+                    {{ $t('eecom-club.detail.saveButtonText') }}
+                </sw-button-process>
+            </template>
+        {% endblock %}
+
+        {% block eecom_club_detail_language_switch %}
+            <template #language-switch>
+                <sw-language-switch
+                    @on-change="onChangeLanguage"
+                    :saveChangesFunction="saveOnLanguageChange"
+                    :abortChangeFunction="abortOnLanguageChange"
+                    :disabled="!clubId">
+                </sw-language-switch>
+            </template>
+        {% endblock %}
+
+        {% block eecom_club_detail_content %}
+            <template #content>
+                <sw-card-view>
+
+                    {% block eecom_club_detail_content_language_info %}
+                        <sw-language-info
+                            :entityDescription="placeholder(club, 'shortName', $tc('eecom-club.detail.textHeadline'))"
+                            :isNewEntity="!clubId">
+                        </sw-language-info>
+                    {% endblock %}
+
+                    {% block eecom_club_detail_content_tabs %}
+                        <sw-tabs v-if="clubId" class="eecom-club-detail-page__tabs">
+                            {% block eecom_club_detail_content_tabs_club_data %}
+                                <sw-tabs-item
+                                    class="eecom-club-detail__tab-club-data"
+                                    :route="{ name: 'eecom.club.detail.clubData', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-club.detail.tabClubData')"
+                                    :hasError="eecomClubDetailClubDataError">
+                                    {{ $tc('eecom-club.detail.tabClubData') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+
+                            {% block eecom_club_detail_content_tabs_club_design %}
+                                <sw-tabs-item
+                                    class="eecom-club-detail__tab-club-design"
+                                    :route="{ name: 'eecom.club.detail.clubDesign', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-club.detail.tabClubDesign')">
+                                    {{ $tc('eecom-club.detail.tabClubDesign') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+
+                            {% block eecom_club_detail_content_tabs_team_assignment %}
+                                <sw-tabs-item
+                                    class="eecom-club-detail__tab-team-assignment"
+                                    :route="{ name: 'eecom.club.detail.teamAssignment', params: { id: $route.params.id } }"
+                                    :title="$tc('eecom-club.detail.tabTeamAssignment')">
+                                    {{ $tc('eecom-club.detail.tabTeamAssignment') }}
+                                </sw-tabs-item>
+                            {% endblock %}
+                        </sw-tabs>
+                    {% endblock %}
+
+                    {% block eecom_club_detail_content_view %}
+                        <router-view></router-view>
+                    {% endblock %}
+
+
+                </sw-card-view>
+            </template>
+        {% endblock %}
+
+        <template #sidebar>
+            {% block eecom_club_detail_sidebar %}
+                <sw-sidebar :propagateWidth="true">
+                    <sw-sidebar-media-item ref="mediaSidebarItem">
+                    </sw-sidebar-media-item>
+                </sw-sidebar>
+            {% endblock %}
+        </template>
+    </sw-page>
+{% endblock %}

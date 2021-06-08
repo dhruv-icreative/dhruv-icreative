@@ -1,0 +1,16 @@
+@import "~scss/variables";
+
+$eecom-team-detail-color-error: $color-crimson;
+$eecom-team-detail-color-success: $color-emerald;
+
+.eecom-team-detail-team-assignment {
+
+    .eecom-team-detail-base__create-player-button {
+        text-align: right;
+        font-size: $font-size-small;
+
+        a {
+            color: $color-shopware-brand-500;
+        }
+    }
+}
